@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textSize="50sp" />
+
+        <EditText
+            android:id="@+id/edit_txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittxt_custom"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_txt_Age"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittxt_custom"
+            android:hint="Age"
+            android:inputType="number"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_txt_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittxt_custom"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_txt_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittxt_custom"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/phone_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/add_button"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_baseline_add_circle_24"
+                    android:onClick="onAdd"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Phone"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_custom"
+            android:text="Register"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            >
+
+            <TextView
+                android:id="@+id/txt_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/member"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/txt_sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_sign_in_short"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
