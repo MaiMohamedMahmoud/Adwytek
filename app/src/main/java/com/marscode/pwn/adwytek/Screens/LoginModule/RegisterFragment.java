@@ -1,5 +1,6 @@
 package com.marscode.pwn.adwytek.Screens.LoginModule;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.marscode.pwn.adwytek.R;
 
@@ -17,6 +19,7 @@ import com.marscode.pwn.adwytek.R;
  */
 public class RegisterFragment extends Fragment {
 
+    LinearLayout phoneContainer;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +64,19 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        phoneContainer = view.findViewById(R.id.phone_container);
+        return view;
+    }
+
+
+    public void onAdd(View v) {
+        LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.register_phone, null);
+        phoneContainer.addView(rowView, phoneContainer.getChildCount() - 1);
+    }
+
+    public void onDelete(View v) {
+        phoneContainer.removeView((View) v.getParent());
     }
 }

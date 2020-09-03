@@ -21,7 +21,8 @@ import java.util.List;
 
 public class LoginRegisterActivity extends AppCompatActivity {
 
-    LinearLayout phoneContainer;
+    LoginFragment mLoginFragment;
+    RegisterFragment mRegisterFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +30,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_register);
         ViewPager viewPager = findViewById(R.id.viewPager);
 
+        mLoginFragment = new LoginFragment();
+        mRegisterFragment = new RegisterFragment();
         RegisterationPagerAdapter registerationPagerAdapter = new RegisterationPagerAdapter(getSupportFragmentManager(), 0);
-        registerationPagerAdapter.addFragmet(new LoginFragment());
-        registerationPagerAdapter.addFragmet(new RegisterFragment());
+        registerationPagerAdapter.addFragmet(mLoginFragment);
+        registerationPagerAdapter.addFragmet(mRegisterFragment);
         viewPager.setAdapter(registerationPagerAdapter);
-
-        //phoneContainer = findViewById(R.id.phone_container);
 
     }
 
@@ -62,14 +63,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
         }
     }
 
-
     public void onAdd(View v) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.register_phone, null);
-        phoneContainer.addView(rowView, phoneContainer.getChildCount() - 1);
+        mRegisterFragment.onAdd(v);
     }
 
     public void onDelete(View v) {
-        phoneContainer.removeView((View) v.getParent());
+        mRegisterFragment.onDelete(v);
     }
+
 }
