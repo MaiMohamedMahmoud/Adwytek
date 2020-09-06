@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,7 +91,6 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_baseline_add_circle_24"
-                    android:onClick="onAdd"
                     android:textSize="15sp" />
 
                 <TextView
@@ -103,7 +103,7 @@
 
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -111,7 +111,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/button_custom"
-            android:text="Register"
+            android:text="@string/signup"
             android:textColor="@android:color/white" />
 
         <LinearLayout
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in_short"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"/>
         </LinearLayout>
 

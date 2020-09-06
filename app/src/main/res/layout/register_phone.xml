@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/bg">
 
     <Button
         android:id="@+id/delete_button"
@@ -11,8 +12,7 @@
         android:layout_height="20dp"
         android:layout_weight=".5"
         android:textSize="15sp"
-        android:background="@drawable/ic_round_remove_circle_outline_24"
-        android:onClick="onDelete" />
+        android:background="@drawable/ic_round_remove_circle_outline_24" />
 
     <Spinner
         android:id="@+id/type_spinner"
