@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screens.PatientCareGiver.PatientCareGiverActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Screens.MedicineList.MedicineListActivity"></activity>
+        <activity
+            android:name=".Screens.PatientCareGiver.PatientCareGiverActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Screens.SplashScreens.SplashScreens"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,7 +35,7 @@
         <activity
             android:name=".Screens.SingUp.RegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

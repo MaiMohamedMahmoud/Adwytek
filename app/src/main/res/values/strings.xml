@@ -18,4 +18,9 @@
     <string name="JoinNow">JOIN NOW AS:</string>
     <string name="patient">PATIENT</string>
     <string name="caregiver">CARE GIVER</string>
+    <string name="medicineIcon">MedicineIcon</string>
+    <string name="medicineName">Medicine Name</string>
+    <string name="medicineStartDate">6 Sep - 23 Sep</string>
+    <string name="medicineTimes"> 3x per day | Tu , Fr , Sa</string>
+    <string name="editIcon">Edit Icon</string>
 </resources>

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.marscode.pwn.adwytek.R;
+import com.marscode.pwn.adwytek.Screens.MedicineList.MedicineListActivity;
 import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 
 /**
@@ -100,7 +101,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         /**
          * here open the MedicineListActivity
          */
-        Intent intent = new Intent(getContext(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), MedicineListActivity.class);
         getActivity().startActivity(intent);
 
     }
