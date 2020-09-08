@@ -48,28 +48,28 @@
             android:textSize="@dimen/medium_txt"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toEndOf="@+id/medicineIconId"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
         <TextView
             android:id="@+id/medicine_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:text="@string/medicineTimes"
-            app:layout_constraintStart_toEndOf="@+id/medicineIconId"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/txt_medicine_name" />
 
         <TextView
             android:id="@+id/medicine_startdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:text="@string/medicineStartDate"
-            app:layout_constraintStart_toEndOf="@+id/medicineIconId"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/medicine_times" />
 
         <ImageView
@@ -92,11 +92,11 @@
             app:layout_constraintGuide_end="0dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
+            android:id="@+id/guideline9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_="65dp" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="63dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

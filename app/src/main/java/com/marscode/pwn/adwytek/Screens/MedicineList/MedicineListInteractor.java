@@ -12,13 +12,23 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 
     @Override
     public List<Medicine> getMedicineList() {
-        Log.i("yarab", "IN Interactor getMedicine");
         medicineList = new ArrayList<>();
         Medicine medicineOmega = new Medicine("Omega");
         Medicine medicineVitamin = new Medicine("Vitamin");
+        Medicine medicineVitaminA = new Medicine("Vitamin A");
+        Medicine medicineVitaminB = new Medicine("Vitamin B");
+        Medicine medicineVitaminD = new Medicine("Vitamin D");
+        Medicine medicineVitaminE = new Medicine("Vitamin E");
+        Medicine medicineVitaminF = new Medicine("Vitamin F");
         medicineList.add(medicineOmega);
         medicineList.add(medicineVitamin);
-        Log.i("yarab", medicineList.size() + "");
+        medicineList.add(medicineVitaminA);
+        medicineList.add(medicineVitaminB);
+        medicineList.add(medicineVitaminD);
+        medicineList.add(medicineVitaminE);
+        medicineList.add(medicineVitaminF);
+
+
         return medicineList;
     }
 }
