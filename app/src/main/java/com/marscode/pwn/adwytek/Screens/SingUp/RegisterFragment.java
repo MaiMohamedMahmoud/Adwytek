@@ -24,6 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.MedicineList.MedicineListActivity;
 import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
@@ -35,19 +38,25 @@ import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 public class RegisterFragment extends Fragment implements RegisterInterface.RegisterView {
 
     LinearLayout phoneContainer;
+    LinearLayout caregiverPhoneContainer;
     RegisterPresenter registerPresenter;
     View phoneView;
+    View caregiverPhoneView;
     Button deletePhone;
     TextView txtSignIn;
     EditText editTxtEmail;
     EditText editTxtPassword;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -70,17 +79,28 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         phoneContainer = view.findViewById(R.id.phone_container);
+        caregiverPhoneContainer = view.findViewById(R.id.caregiver_phone_container);
         txtSignIn = view.findViewById(R.id.txt_sign_in);
         registerPresenter = new RegisterPresenter(this);
         Button addPhone = view.findViewById(R.id.add_button);
+        Button addCareGiverPhone = view.findViewById(R.id.add_caregiver_button);
         Button signUp = view.findViewById(R.id.btn_sign_up);
         editTxtEmail = view.findViewById(R.id.edit_txt_email);
         editTxtPassword = view.findViewById(R.id.edit_txt_password);
 
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         addPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddPhone(view);
+            }
+        });
+
+        addCareGiverPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddCareGiverPhone(view);
             }
         });
         txtSignIn.setOnClickListener(new View.OnClickListener() {
@@ -102,17 +122,13 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     private void registerNewUser(String email, String password) {
         // Validations for input email and password
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "Please enter email!!",
-                    Toast.LENGTH_LONG)
-                    .show();
+            editTxtEmail.setError("Please enter email!!");
+            editTxtEmail.setFocusable(true);
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "Please enter password!!",
-                    Toast.LENGTH_LONG)
-                    .show();
+            editTxtPassword.setError("Please enter password!!");
+            editTxtPassword.setFocusable(true);
             return;
         }
 
@@ -130,9 +146,8 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
 
                             // hide the progress bar
 
+                            writeNewUser(mAuth.getUid(),"Mai","Email");
 
-                            // if the user created intent to login activity
-                            medicineListActivity();
                         } else {
                             // Registration failed
                             Toast.makeText(
@@ -158,6 +173,26 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
                 registerPresenter.deletePhone(view, phoneContainer);
             }
         });
+    }
+
+    public void AddCareGiverPhone(View view) {
+        caregiverPhoneView = registerPresenter.addPhone(view,caregiverPhoneContainer);
+        deletePhone = caregiverPhoneView.findViewById(R.id.delete_button);
+        deletePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerPresenter.deletePhone(view, caregiverPhoneContainer);
+            }
+        });
+    }
+
+
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+        // if the user created intent to login activity
+        medicineListActivity();
     }
 
     @Override

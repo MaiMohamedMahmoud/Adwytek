@@ -2,8 +2,7 @@
 <resources>
     <string-array name="types">
         <item>Mobile</item>
-        <item>Office</item>
-        <item>Home</item>
+        <item>Work</item>
     </string-array>
 
 </resources>

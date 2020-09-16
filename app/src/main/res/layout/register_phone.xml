@@ -31,8 +31,10 @@
         android:background="@drawable/edittxt_custom"
         android:inputType="phone"
         android:textSize="15sp"
+        android:paddingLeft="15dp"
         android:hint="Add phoneNumber"
         android:autofillHints="" />
+
 
 
 </LinearLayout>

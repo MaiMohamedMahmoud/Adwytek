@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
 
-class RegisterPresenter implements RegisterInterface.RegisterPresenter {
+public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
 
     RegisterInterface.RegisterView mRegisterView;
 
@@ -27,5 +27,17 @@ class RegisterPresenter implements RegisterInterface.RegisterPresenter {
     @Override
     public void deletePhone(View view, LinearLayout linearLayout) {
         linearLayout.removeView((View) view.getParent());
+    }
+
+    @Override
+    public View addCaregiverPhone(View view, LinearLayout linearLayout) {
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        return null;
+    }
+
+    @Override
+    public void deleteCaregiverPhone(View view, LinearLayout linearLayout) {
+
     }
 }

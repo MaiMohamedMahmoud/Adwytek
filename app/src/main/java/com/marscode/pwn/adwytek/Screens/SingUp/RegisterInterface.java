@@ -16,6 +16,9 @@ interface RegisterInterface {
         View addPhone(View view, LinearLayout linearLayout);
 
         void deletePhone(View view, LinearLayout linearLayout);
+
+        View addCaregiverPhone(View view , LinearLayout linearLayout);
+        void deleteCaregiverPhone(View view ,LinearLayout linearLayout);
     }
 
     interface RegisterView {
