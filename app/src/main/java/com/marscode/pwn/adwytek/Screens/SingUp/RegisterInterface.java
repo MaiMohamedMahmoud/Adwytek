@@ -8,7 +8,9 @@ import com.marscode.pwn.adwytek.Model.User;
 interface RegisterInterface {
 
     interface RegisterInteractor {
-        void addUser(User user);
+        void authenticateNewUser(String email, String password);
+
+        void registerNewUser(User user);
     }
 
     interface RegisterPresenter {
@@ -17,12 +19,17 @@ interface RegisterInterface {
 
         void deletePhone(View view, LinearLayout linearLayout);
 
-        View addCaregiverPhone(View view , LinearLayout linearLayout);
-        void deleteCaregiverPhone(View view ,LinearLayout linearLayout);
+        void authenticateNewUser(String email, String password);
+
+        void registerNewUser(User user);
+
     }
 
     interface RegisterView {
         void loggedIn();
+
+        void validateUser();
+
         void medicineListActivity();
     }
 }

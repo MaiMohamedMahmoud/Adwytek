@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,12 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     TextView txtSignIn;
     EditText editTxtEmail;
     EditText editTxtPassword;
+    EditText editTxtName;
+    EditText editTxtAge;
+    EditText editTxtPatientPhone;
+    EditText editTxtCareGiverPhone;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
 
 
     @Override
@@ -76,20 +80,23 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        registerPresenter = new RegisterPresenter(this, new RegisterInteractor());
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         phoneContainer = view.findViewById(R.id.phone_container);
         caregiverPhoneContainer = view.findViewById(R.id.caregiver_phone_container);
         txtSignIn = view.findViewById(R.id.txt_sign_in);
-        registerPresenter = new RegisterPresenter(this);
         Button addPhone = view.findViewById(R.id.add_button);
         Button addCareGiverPhone = view.findViewById(R.id.add_caregiver_button);
         Button signUp = view.findViewById(R.id.btn_sign_up);
         editTxtEmail = view.findViewById(R.id.edit_txt_email);
         editTxtPassword = view.findViewById(R.id.edit_txt_password);
-
+        editTxtName = view.findViewById(R.id.edit_txt_name);
+        editTxtAge = view.findViewById(R.id.edit_txt_Age);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        AddPhone(view);
+        AddCareGiverPhone(view);
         addPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,8 +107,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         addCareGiverPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddCareGiverPhone(view);
-            }
+                AddCareGiverPhone(view); }
         });
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,29 +118,20 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString());
+                registerNewUser();
+
 
             }
         });
         return view;
     }
 
-    private void registerNewUser(String email, String password) {
+    private void registerNewUser() {
         // Validations for input email and password
-        if (TextUtils.isEmpty(email)) {
-            editTxtEmail.setError("Please enter email!!");
-            editTxtEmail.setFocusable(true);
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            editTxtPassword.setError("Please enter password!!");
-            editTxtPassword.setFocusable(true);
-            return;
-        }
-
+        validateUser();
         // create new user or register new user
         mAuth
-                .createUserWithEmailAndPassword(email, password)
+                .createUserWithEmailAndPassword(editTxtEmail.getText().toString(), editTxtPassword.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -145,8 +142,8 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
                                     .show();
 
                             // hide the progress bar
-
-                            writeNewUser(mAuth.getUid(),"Mai","Email");
+                            Log.i("user", "inside correct");
+                            writeNewUser(mAuth.getUid(), "Mai", "Email");
 
                         } else {
                             // Registration failed
@@ -164,9 +161,11 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
                 });
     }
 
+
     public void AddPhone(View view) {
         phoneView = registerPresenter.addPhone(view, phoneContainer);
         deletePhone = phoneView.findViewById(R.id.delete_button);
+        editTxtPatientPhone = phoneView.findViewById(R.id.edit_txt_phone);
         deletePhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,8 +175,9 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     }
 
     public void AddCareGiverPhone(View view) {
-        caregiverPhoneView = registerPresenter.addPhone(view,caregiverPhoneContainer);
+        caregiverPhoneView = registerPresenter.addPhone(view, caregiverPhoneContainer);
         deletePhone = caregiverPhoneView.findViewById(R.id.delete_button);
+        editTxtCareGiverPhone = caregiverPhoneView.findViewById(R.id.edit_txt_phone);
         deletePhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,9 +188,11 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
 
 
     private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
+        Log.i("user", "inside wrte");
+        User user = new User(userId, editTxtName.getText().toString(), editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), editTxtPatientPhone.getText().toString());
 
-        mDatabase.child("users").child(userId).setValue(user);
+        Log.i("user", user.toString());
+        mDatabase.child("users").child(userId).setValue(user.toMap());
         // if the user created intent to login activity
         medicineListActivity();
     }
@@ -202,6 +204,24 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
          */
         Intent intent = new Intent(getContext(), LoginActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void validateUser() {
+
+        //editTxtName.getText().toString(), editTxtPassword.getText().toString(),editTxtAge.getText().toString(),editTxtCareGiverPhone.getText().toString(),editTxtPatientPhone.getText().toString()
+
+        // Validations for input email and password
+        if (TextUtils.isEmpty(editTxtEmail.getText().toString())) {
+            editTxtEmail.setError("Please enter email!!");
+            editTxtEmail.setFocusable(true);
+            return;
+        }
+        if (TextUtils.isEmpty(editTxtPassword.getText().toString())) {
+            editTxtPassword.setError("Please enter password!!");
+            editTxtPassword.setFocusable(true);
+            return;
+        }
     }
 
     @Override

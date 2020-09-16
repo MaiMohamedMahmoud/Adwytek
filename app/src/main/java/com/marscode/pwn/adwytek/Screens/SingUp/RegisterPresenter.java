@@ -11,9 +11,11 @@ import com.marscode.pwn.adwytek.R;
 public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
 
     RegisterInterface.RegisterView mRegisterView;
+    RegisterInterface.RegisterInteractor mRegisterInteractor;
 
-    RegisterPresenter(RegisterInterface.RegisterView registerView) {
+    RegisterPresenter(RegisterInterface.RegisterView registerView, RegisterInterface.RegisterInteractor registerInteractor) {
         mRegisterView = registerView;
+        mRegisterInteractor = registerInteractor;
     }
 
     @Override
@@ -30,14 +32,12 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
     }
 
     @Override
-    public View addCaregiverPhone(View view, LinearLayout linearLayout) {
-        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        return null;
+    public void authenticateNewUser(String email, String password) {
+        mRegisterInteractor.authenticateNewUser(email, password);
     }
 
     @Override
-    public void deleteCaregiverPhone(View view, LinearLayout linearLayout) {
-
+    public void registerNewUser(User user) {
+        mRegisterInteractor.registerNewUser(user);
     }
 }
