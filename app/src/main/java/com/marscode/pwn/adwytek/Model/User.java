@@ -16,14 +16,13 @@ public class User {
     public String age;
     public String caregiver_phone;
     public String  patient_phone;
-    public String password;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User( String uid,String username, String email, String password, String age, String caregiver_phone, String patient_phone) {
-        this.uid = uid;
+    public User( String username, String email, String age, String caregiver_phone, String patient_phone) {
+
         this.user_name = username;
         this.email = email;
         this.age = age;

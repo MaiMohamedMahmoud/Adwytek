@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
 
@@ -32,12 +31,28 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
     }
 
     @Override
-    public void authenticateNewUser(String email, String password) {
-        mRegisterInteractor.authenticateNewUser(email, password);
+    public void createNewUser( String email, String password, String name, String Age, String caregive_phone, String patient_phone) {
+        boolean result = mRegisterInteractor.authenticateNewUser( email, password);
+        if (result) {
+            //show message success
+            mRegisterView.showMessage("Registration successful!");
+            // hide the progress bar
+
+            User user = new User( name, email, Age, caregive_phone, patient_phone);
+            registerNewUser(user);
+
+        } else {
+            // Registration failed
+            mRegisterView.showMessage("Registration failed!!" + " Please try again later");
+
+            // hide the progress bar
+        }
     }
+
 
     @Override
     public void registerNewUser(User user) {
         mRegisterInteractor.registerNewUser(user);
+        mRegisterView.startMedicineListActivity();
     }
 }

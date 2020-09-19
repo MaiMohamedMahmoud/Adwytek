@@ -80,7 +80,8 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        registerPresenter = new RegisterPresenter(this, new RegisterInteractor());
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        registerPresenter = new RegisterPresenter(this, new RegisterInteractor(mAuth, mDatabase));
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         phoneContainer = view.findViewById(R.id.phone_container);
@@ -94,7 +95,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         editTxtName = view.findViewById(R.id.edit_txt_name);
         editTxtAge = view.findViewById(R.id.edit_txt_Age);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         AddPhone(view);
         AddCareGiverPhone(view);
         addPhone.setOnClickListener(new View.OnClickListener() {
@@ -107,58 +108,24 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         addCareGiverPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddCareGiverPhone(view); }
+                AddCareGiverPhone(view);
+            }
         });
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loggedIn();
+                startLoggedInActivity();
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerNewUser();
+                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), editTxtPatientPhone.getText().toString());
 
 
             }
         });
         return view;
-    }
-
-    private void registerNewUser() {
-        // Validations for input email and password
-        validateUser();
-        // create new user or register new user
-        mAuth
-                .createUserWithEmailAndPassword(editTxtEmail.getText().toString(), editTxtPassword.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getActivity().getApplicationContext(),
-                                    "Registration successful!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
-                            // hide the progress bar
-                            Log.i("user", "inside correct");
-                            writeNewUser(mAuth.getUid(), "Mai", "Email");
-
-                        } else {
-                            // Registration failed
-                            Toast.makeText(
-                                    getActivity().getApplicationContext(),
-                                    "Registration failed!!"
-                                            + " Please try again later",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
-                            // hide the progress bar
-
-                        }
-                    }
-                });
     }
 
 
@@ -186,19 +153,8 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         });
     }
 
-
-    private void writeNewUser(String userId, String name, String email) {
-        Log.i("user", "inside wrte");
-        User user = new User(userId, editTxtName.getText().toString(), editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), editTxtPatientPhone.getText().toString());
-
-        Log.i("user", user.toString());
-        mDatabase.child("users").child(userId).setValue(user.toMap());
-        // if the user created intent to login activity
-        medicineListActivity();
-    }
-
     @Override
-    public void loggedIn() {
+    public void startLoggedInActivity() {
         /**
          * here open the LoginActivity
          */
@@ -225,7 +181,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     }
 
     @Override
-    public void medicineListActivity() {
+    public void startMedicineListActivity() {
         /**
          * here open the MedicineListActivity
          */
@@ -233,4 +189,25 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         getActivity().startActivity(intent);
 
     }
+
+    @Override
+    public void showMessage(String message) {
+
+        Toast.makeText(
+                getActivity().getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
 }
