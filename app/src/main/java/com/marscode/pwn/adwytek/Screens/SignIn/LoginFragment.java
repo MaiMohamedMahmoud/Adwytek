@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment implements LoginInterface.LoginView 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        final LoginPresenter loginPresenter = new LoginPresenter(new LoginInteractor(mAuth), this);
+        final LoginPresenter loginPresenter = new LoginPresenter(new LoginInteractor(mAuth), this, getActivity().getApplicationContext());
         editTxtEmail = view.findViewById(R.id.edit_txt_email);
         editTxtPassword = view.findViewById(R.id.edit_txt_password);
         signIn = view.findViewById(R.id.btn_login);
