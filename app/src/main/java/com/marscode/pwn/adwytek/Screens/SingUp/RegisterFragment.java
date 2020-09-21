@@ -81,7 +81,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        registerPresenter = new RegisterPresenter(this, new RegisterInteractor(mAuth, mDatabase));
+        registerPresenter = new RegisterPresenter(this, new RegisterInteractor(mAuth, mDatabase),getContext());
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         phoneContainer = view.findViewById(R.id.phone_container);

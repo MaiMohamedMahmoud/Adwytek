@@ -4,17 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
 
-public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
+public class RegisterPresenter implements RegisterInterface.RegisterPresenter, RegisterInterface.RegisterInteractor.OnFinishedListener {
 
     RegisterInterface.RegisterView mRegisterView;
     RegisterInterface.RegisterInteractor mRegisterInteractor;
+    Context context;
+    User user;
 
-    RegisterPresenter(RegisterInterface.RegisterView registerView, RegisterInterface.RegisterInteractor registerInteractor) {
+    RegisterPresenter(RegisterInterface.RegisterView registerView, RegisterInterface.RegisterInteractor registerInteractor, Context context) {
         mRegisterView = registerView;
         mRegisterInteractor = registerInteractor;
+        this.context = context;
     }
 
     @Override
@@ -31,22 +37,11 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
     }
 
     @Override
-    public void createNewUser( String email, String password, String name, String Age, String caregive_phone, String patient_phone) {
-        boolean result = mRegisterInteractor.authenticateNewUser( email, password);
-        if (result) {
-            //show message success
-            mRegisterView.showMessage("Registration successful!");
-            // hide the progress bar
+    public void createNewUser(String email, String password, String name, String Age, String caregive_phone, String patient_phone) {
+        mRegisterInteractor.authenticateNewUser(email, password, this);
+        user = new User(name, email, Age, caregive_phone, patient_phone);
 
-            User user = new User( name, email, Age, caregive_phone, patient_phone);
-            registerNewUser(user);
 
-        } else {
-            // Registration failed
-            mRegisterView.showMessage("Registration failed!!" + " Please try again later");
-
-            // hide the progress bar
-        }
     }
 
 
@@ -54,5 +49,19 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter {
     public void registerNewUser(User user) {
         mRegisterInteractor.registerNewUser(user);
         mRegisterView.startMedicineListActivity();
+    }
+
+    @Override
+    public void onFinished(Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            //show message success
+            mRegisterView.showMessage(context.getString(R.string.success_register));
+            // hide the progress bar
+            registerNewUser(user);
+        } else {
+            // Registration failed
+            mRegisterView.showMessage(context.getString(R.string.register_fail));
+            // hide the progress bar
+        }
     }
 }

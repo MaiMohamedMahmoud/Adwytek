@@ -24,4 +24,6 @@
     <string name="medicineTimes"> 3x per day | Tu , Fr , Sa</string>
     <string name="editIcon">Edit Icon</string>
     <string name="successLogin">Successfully Logged In</string>
+    <string name="success_register">Registration successful!</string>
+    <string name="register_fail">Registration failed!! Please try again later"</string>
 </resources>

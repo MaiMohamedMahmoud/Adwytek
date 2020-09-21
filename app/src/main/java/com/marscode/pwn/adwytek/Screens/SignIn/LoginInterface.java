@@ -7,6 +7,7 @@ import com.marscode.pwn.adwytek.Model.User;
 interface LoginInterface {
 
     interface LoginInteractor {
+        
         interface OnFinishedListener {
             void onFinished(Task<AuthResult> task);
         }

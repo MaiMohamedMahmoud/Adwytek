@@ -24,21 +24,16 @@ public class RegisterInteractor implements RegisterInterface.RegisterInteractor 
     }
 
     @Override
-    public boolean authenticateNewUser(String email, String password) {
+    public void authenticateNewUser(String email, String password, final OnFinishedListener listener) {
         // create new user or register new user
         auth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            result = true;
-                        } else {
-                            result = false;
-                        }
+                        listener.onFinished(task);
                     }
                 });
-        return result;
     }
 
     @Override
