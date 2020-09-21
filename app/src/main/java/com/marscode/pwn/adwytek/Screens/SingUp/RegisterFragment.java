@@ -10,10 +10,13 @@ import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -31,6 +34,9 @@ import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.MedicineList.MedicineListActivity;
 import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +59,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     EditText editTxtCareGiverPhone;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    List<String> phoneList;
 
 
     @Override
@@ -81,7 +88,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        registerPresenter = new RegisterPresenter(this, new RegisterInteractor(mAuth, mDatabase),getContext());
+        registerPresenter = new RegisterPresenter(this, new RegisterInteractor(mAuth, mDatabase), getContext());
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         phoneContainer = view.findViewById(R.id.phone_container);
@@ -94,7 +101,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         editTxtPassword = view.findViewById(R.id.edit_txt_password);
         editTxtName = view.findViewById(R.id.edit_txt_name);
         editTxtAge = view.findViewById(R.id.edit_txt_Age);
-
+        phoneList = new ArrayList<>();
 
         AddPhone(view);
         AddCareGiverPhone(view);
@@ -120,7 +127,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), editTxtPatientPhone.getText().toString());
+                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), phoneList);
 
 
             }
@@ -131,14 +138,44 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
 
     public void AddPhone(View view) {
         phoneView = registerPresenter.addPhone(view, phoneContainer);
-        deletePhone = phoneView.findViewById(R.id.delete_button);
-        editTxtPatientPhone = phoneView.findViewById(R.id.edit_txt_phone);
-        deletePhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerPresenter.deletePhone(view, phoneContainer);
-            }
-        });
+        //phoneView.getId();
+        Log.i("yarab", phoneView + "IDDD");
+
+        int childCount = phoneContainer.getChildCount();
+        Log.i("yarab", childCount + "IDDD");
+        for (int i = 0; i < childCount; i++) {
+            View thisChild = phoneContainer.getChildAt(i);
+
+            Log.i("yarab", thisChild + "View");
+            deletePhone = phoneView.findViewById(R.id.delete_button);
+            editTxtPatientPhone = phoneView.findViewById(R.id.edit_txt_phone);
+
+            editTxtPatientPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean hasFocus) {
+                    String input;
+                    EditText editText;
+
+                    if (!hasFocus) {
+                        editText = (EditText) view;
+                        input = editText.getText().toString();
+                        Log.i("yarab + input", input);
+                        phoneList.add(input);
+                    }
+                }
+            });
+
+            deletePhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    registerPresenter.deletePhone(view, phoneContainer);
+                }
+            });
+
+        }
+        Log.i("yarab", childCount + "ch");
+
     }
 
     public void AddCareGiverPhone(View view) {

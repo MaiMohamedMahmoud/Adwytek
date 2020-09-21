@@ -8,6 +8,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.marscode.pwn.adwytek.Model.User;
 
+import java.util.List;
+
 interface RegisterInterface {
 
     interface RegisterInteractor {
@@ -16,7 +18,7 @@ interface RegisterInterface {
             void onFinished(Task<AuthResult> task);
         }
 
-        void authenticateNewUser(String email, String password,OnFinishedListener listener);
+        void authenticateNewUser(String email, String password, OnFinishedListener listener);
 
         void registerNewUser(User user);
     }
@@ -27,7 +29,7 @@ interface RegisterInterface {
 
         void deletePhone(View view, LinearLayout linearLayout);
 
-        void createNewUser(String email, String password, String name, String Age, String caregive_phone, String patient_phone);
+        void createNewUser(String email, String password, String name, String Age, String caregive_phone, List<String> patient_phone);
 
         void registerNewUser(User user);
 

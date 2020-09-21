@@ -1,6 +1,7 @@
 package com.marscode.pwn.adwytek.Screens.SingUp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +10,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.marscode.pwn.adwytek.Model.User;
 import com.marscode.pwn.adwytek.R;
+
+import java.util.List;
 
 public class RegisterPresenter implements RegisterInterface.RegisterPresenter, RegisterInterface.RegisterInteractor.OnFinishedListener {
 
@@ -28,7 +31,9 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter, R
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.register_phone, null);
         linearLayout.addView(rowView, linearLayout.getChildCount() - 1);
+        //linearLayout.getChildAt(linearLayout.getChildCount() - 1);
         return rowView;
+
     }
 
     @Override
@@ -37,7 +42,7 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter, R
     }
 
     @Override
-    public void createNewUser(String email, String password, String name, String Age, String caregive_phone, String patient_phone) {
+    public void createNewUser(String email, String password, String name, String Age, String caregive_phone, List<String> patient_phone) {
         mRegisterInteractor.authenticateNewUser(email, password, this);
         user = new User(name, email, Age, caregive_phone, patient_phone);
 
