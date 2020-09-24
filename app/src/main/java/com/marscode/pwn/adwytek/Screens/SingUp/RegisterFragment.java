@@ -14,6 +14,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -60,7 +61,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     List<String> phoneList;
-
+    List<String> caregiverList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         editTxtName = view.findViewById(R.id.edit_txt_name);
         editTxtAge = view.findViewById(R.id.edit_txt_Age);
         phoneList = new ArrayList<>();
+        caregiverList = new ArrayList<>();
 
         AddPhone(view);
         AddCareGiverPhone(view);
@@ -127,9 +129,9 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), editTxtCareGiverPhone.getText().toString(), phoneList);
-
-
+                editTxtCareGiverPhone.clearFocus();
+                editTxtPatientPhone.clearFocus();
+                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), caregiverList, phoneList);
             }
         });
         return view;
@@ -137,30 +139,28 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
 
 
     public void AddPhone(View view) {
+
         phoneView = registerPresenter.addPhone(view, phoneContainer);
-        //phoneView.getId();
-        Log.i("yarab", phoneView + "IDDD");
 
-        int childCount = phoneContainer.getChildCount();
-        Log.i("yarab", childCount + "IDDD");
+        int childCount = phoneContainer.getChildCount() - 1;
         for (int i = 0; i < childCount; i++) {
-            View thisChild = phoneContainer.getChildAt(i);
-
-            Log.i("yarab", thisChild + "View");
             deletePhone = phoneView.findViewById(R.id.delete_button);
             editTxtPatientPhone = phoneView.findViewById(R.id.edit_txt_phone);
-
             editTxtPatientPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean hasFocus) {
                     String input;
                     EditText editText;
-
                     if (!hasFocus) {
                         editText = (EditText) view;
                         input = editText.getText().toString();
-                        Log.i("yarab + input", input);
                         phoneList.add(input);
+                    } else {
+                        editText = (EditText) view;
+                        input = editText.getText().toString();
+                        if (phoneList.contains(input)) {
+                            phoneList.remove(input);
+                        }
                     }
                 }
             });
@@ -168,26 +168,57 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
             deletePhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    View v = (View) view.getParent();
+                    EditText editText;
+                    editText = v.findViewById(R.id.edit_txt_phone);
+                    if (phoneList.contains(editText.getText().toString())) {
+                        phoneList.remove(editText.getText().toString());
+                    }
                     registerPresenter.deletePhone(view, phoneContainer);
+
                 }
             });
-
         }
-        Log.i("yarab", childCount + "ch");
 
     }
 
     public void AddCareGiverPhone(View view) {
         caregiverPhoneView = registerPresenter.addPhone(view, caregiverPhoneContainer);
-        deletePhone = caregiverPhoneView.findViewById(R.id.delete_button);
-        editTxtCareGiverPhone = caregiverPhoneView.findViewById(R.id.edit_txt_phone);
-        deletePhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerPresenter.deletePhone(view, caregiverPhoneContainer);
-            }
-        });
+        int childCount = caregiverPhoneContainer.getChildCount() - 1;
+        for (int i = 0; i < childCount; i++) {
+            deletePhone = caregiverPhoneView.findViewById(R.id.delete_button);
+            editTxtCareGiverPhone = caregiverPhoneView.findViewById(R.id.edit_txt_phone);
+            editTxtCareGiverPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean hasFocus) {
+                    String input;
+                    EditText editText;
+                    if (!hasFocus) {
+                        editText = (EditText) view;
+                        input = editText.getText().toString();
+                        caregiverList.add(input);
+                    } else {
+                        editText = (EditText) view;
+                        input = editText.getText().toString();
+                        if (caregiverList.contains(input)) {
+                            caregiverList.remove(input);
+                        }
+                    }
+                }
+            });
+            deletePhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    View v = (View) view.getParent();
+                    EditText editText;
+                    editText = v.findViewById(R.id.edit_txt_phone);
+                    if (caregiverList.contains(editText.getText().toString())) {
+                        caregiverList.remove(editText.getText().toString());
+                    }
+                    registerPresenter.deletePhone(view, caregiverPhoneContainer);
+                }
+            });
+        }
     }
 
     @Override

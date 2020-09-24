@@ -29,7 +29,7 @@ interface RegisterInterface {
 
         void deletePhone(View view, LinearLayout linearLayout);
 
-        void createNewUser(String email, String password, String name, String Age, String caregive_phone, List<String> patient_phone);
+        void createNewUser(String email, String password, String name, String Age, List<String> caregive_phone, List<String> patient_phone);
 
         void registerNewUser(User user);
 

@@ -15,7 +15,7 @@ public class User {
     public String user_name;
     public String email;
     public String age;
-    public String caregiver_phone;
+    public List<String> caregiver_phone;
     public List<String>  patient_phone;
 
 
@@ -23,7 +23,7 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User( String username, String email, String age, String caregiver_phone, List<String> patient_phone) {
+    public User( String username, String email, String age, List<String> caregiver_phone, List<String> patient_phone) {
 
         this.user_name = username;
         this.email = email;

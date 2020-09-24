@@ -31,7 +31,6 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter, R
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.register_phone, null);
         linearLayout.addView(rowView, linearLayout.getChildCount() - 1);
-        //linearLayout.getChildAt(linearLayout.getChildCount() - 1);
         return rowView;
 
     }
@@ -42,7 +41,7 @@ public class RegisterPresenter implements RegisterInterface.RegisterPresenter, R
     }
 
     @Override
-    public void createNewUser(String email, String password, String name, String Age, String caregive_phone, List<String> patient_phone) {
+    public void createNewUser(String email, String password, String name, String Age, List<String> caregive_phone, List<String> patient_phone) {
         mRegisterInteractor.authenticateNewUser(email, password, this);
         user = new User(name, email, Age, caregive_phone, patient_phone);
 
