@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 
@@ -21,10 +22,20 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
 
     RecyclerView recyclerMedicine;
     MedicineListPresenter medicineListPresenter;
+    FirebaseAuth mAuth;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        //sign out on the profile page
+        //mAuth.signOut();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Nullable
