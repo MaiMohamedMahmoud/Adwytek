@@ -19,8 +19,7 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
 
     @Override
     public List<Medicine> getMedicineList() {
-        Log.i("yarab","IN presenter getMedicine");
-        List<Medicine> medicineList=  medicineListInteractor.getMedicineList();
+        List<Medicine> medicineList = medicineListInteractor.getMedicineList();
         medicineListView.setMedicineList(medicineList);
         return medicineList;
     }

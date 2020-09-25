@@ -49,7 +49,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         }
 
         public void bind(int position) {
-            txt_medicine_name.setText(medicineList.get(position).getMedicineName());
+            txt_medicine_name.setText(medicineList.get(position).getName());
         }
 
     }
