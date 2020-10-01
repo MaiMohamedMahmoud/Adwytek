@@ -16,7 +16,7 @@ public class Medicine {
     public Date start_date;
     public Date end_date;
     public String frequency_of_intake;
-    public List<Dose> doseList;
+    public List<Dose> Doses;
 
     public Medicine() {
 
@@ -27,7 +27,7 @@ public class Medicine {
         this.start_date = start_date;
         this.end_date = end_date;
         this.frequency_of_intake = frequency_of_intake;
-        this.doseList = doseList;
+        this.Doses = doseList;
     }
 
     public String getName() {
@@ -47,7 +47,7 @@ public class Medicine {
     }
 
     public List<Dose> getDoseList() {
-        return doseList;
+        return Doses;
     }
 
     // ...
@@ -59,7 +59,7 @@ public class Medicine {
         medicine.put("start_date", start_date);
         medicine.put("end_date", end_date);
         medicine.put("frequency_of_intake", frequency_of_intake);
-        medicine.put("Doses", doseList);
+        medicine.put("Doses", Doses);
         return medicine;
     }
 }

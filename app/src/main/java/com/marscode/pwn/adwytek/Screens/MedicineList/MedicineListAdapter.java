@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -41,15 +43,26 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
     public class MedicineViewHolder extends RecyclerView.ViewHolder {
         TextView txt_medicine_name;
+        TextView txt_medicine_Date;
+        TextView txt_medicine_times;
 
         public MedicineViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_medicine_name = itemView.findViewById(R.id.txt_medicine_name);
-
+            txt_medicine_Date = itemView.findViewById(R.id.medicine_startdate);
+            txt_medicine_times = itemView.findViewById(R.id.medicine_times);
         }
 
         public void bind(int position) {
             txt_medicine_name.setText(medicineList.get(position).getName());
+            //here list of days // when it is okay....
+
+            DateFormat date = new SimpleDateFormat("dd MMM");
+            String dateStartedFormatted = date.format(medicineList.get(position).start_date);
+            String dateEndFormatted = date.format(medicineList.get(position).end_date);
+            txt_medicine_times.setText(medicineList.get(position).getFrequency_of_intake() + "x per day | ");
+
+            txt_medicine_Date.setText(dateStartedFormatted + " - " + dateEndFormatted);
         }
 
     }

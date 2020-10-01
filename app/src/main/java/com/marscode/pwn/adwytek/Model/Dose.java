@@ -13,6 +13,10 @@ public class Dose {
     public Date time;
     public String dose_quantity;
 
+    public Dose() {
+
+    }
+
     public Dose(String day, Date time, String dose_quantity) {
         this.day = day;
         this.time = time;
