@@ -8,6 +8,8 @@ interface MedicineListInterface {
 
     interface MedicineListInteractor {
         List<Medicine> getMedicineList();
+
+        void addNewMedicine();
     }
 
     interface MedicineListView {
@@ -16,6 +18,8 @@ interface MedicineListInterface {
 
     interface MedicineListPresenter {
         List<Medicine> getMedicineList();
+
+        void addNewMedicine();
     }
 
 }

@@ -23,4 +23,11 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
         medicineListView.setMedicineList(medicineList);
         return medicineList;
     }
+
+    @Override
+    public void addNewMedicine() {
+        medicineListInteractor.addNewMedicine();
+    }
+
+
 }

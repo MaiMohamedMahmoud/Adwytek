@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 
@@ -25,6 +27,9 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     MedicineListPresenter medicineListPresenter;
     FirebaseAuth mAuth;
     FloatingActionButton fab_new_medicine;
+    DatabaseReference mDatabase;
+
+
 
     @Override
     public void onStop() {
@@ -44,17 +49,22 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_medicine_list, container, false);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerMedicine = view.findViewById(R.id.recycle_medicineList);
         fab_new_medicine = view.findViewById(R.id.fab_new_medicine);
         fab_new_medicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                addNewMedicine();
             }
         });
-        medicineListPresenter = new MedicineListPresenter(this, new MedicineListInteractor());
+        medicineListPresenter = new MedicineListPresenter(this, new MedicineListInteractor(mAuth, mDatabase));
         medicineListPresenter.getMedicineList();
         return view;
+    }
+
+    public void addNewMedicine() {
+        medicineListPresenter.addNewMedicine();
     }
 
     @Override
