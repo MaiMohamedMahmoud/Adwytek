@@ -58,9 +58,18 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             //here list of days // when it is okay....
 
             DateFormat date = new SimpleDateFormat("dd MMM");
+            String list_of_days = "";
             String dateStartedFormatted = date.format(medicineList.get(position).start_date);
             String dateEndFormatted = date.format(medicineList.get(position).end_date);
-            txt_medicine_times.setText(medicineList.get(position).getFrequency_of_intake() + "x per day | ");
+
+            for (int i = 0; i < medicineList.get(position).Doses.size(); i++) {
+                if (i == medicineList.get(position).Doses.size() - 1) {
+                    list_of_days = list_of_days + medicineList.get(position).Doses.get(i).day;
+                } else {
+                    list_of_days = list_of_days + medicineList.get(position).Doses.get(i).day + " ,";
+                }
+            }
+            txt_medicine_times.setText(medicineList.get(position).getFrequency_of_intake() + "x per day | " + list_of_days);
 
             txt_medicine_Date.setText(dateStartedFormatted + " - " + dateEndFormatted);
         }

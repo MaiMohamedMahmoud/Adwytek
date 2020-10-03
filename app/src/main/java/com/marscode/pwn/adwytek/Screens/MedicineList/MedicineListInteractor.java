@@ -23,11 +23,10 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 class MedicineListInteractor implements MedicineListInterface.MedicineListInteractor {
-    List<Medicine> medicineList;
     List<String> days;
     FirebaseAuth auth;
-    DatabaseReference databaseReference;
-    DatabaseReference medicineRef;
+    public DatabaseReference databaseReference;
+    public DatabaseReference medicineRef;
 
     MedicineListInteractor(FirebaseAuth auth, DatabaseReference database) {
         this.auth = auth;
@@ -36,23 +35,13 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     }
 
     @Override
-    public List<Medicine> getMedicineList() {
-        medicineList = new ArrayList<>();
+    public void getMedicineList(final OnFinishedListener listener) {
+
         medicineRef = databaseReference.child("medicine");
         medicineRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Medicine list and use the values to update the UI
-                int i = 0;
-                Log.i("yarab get", dataSnapshot.getChildrenCount() + "");
-                for (DataSnapshot med : dataSnapshot.getChildren()) {
-                    Medicine medicineObj = med.getValue(Medicine.class);
-                    Log.i("yarab get" + i++, medicineObj.start_date + " " + medicineObj.frequency_of_intake + " " + medicineObj.Doses.get(0).dose_quantity + " " + medicineObj.name + "");
-
-                    medicineList.add(medicineObj);
-                }
-                //medicineList = dataSnapshot.getValue(medicine);
-                // ...
+                listener.onFinished(dataSnapshot);
             }
 
             @Override
@@ -92,9 +81,6 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 //        medicineList.add(medicineVitaminD);
 //        medicineList.add(medicineVitaminE);
 //        medicineList.add(medicineVitaminF);
-        Log.i("yarab get", medicineList.size() + "");
-
-        return medicineList;
     }
 
     @Override
@@ -111,8 +97,10 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 //        String formattedDate = df.format(c);
 
         Dose dose1 = new Dose("Su", c, "2");
+        Dose dose2 = new Dose("Tu", c, "3");
         List<Dose> doseList = new ArrayList<>();
         doseList.add(dose1);
+        doseList.add(dose2);
 
 
         Medicine medicineOmega = new Medicine("Omega", c, c, "3", doseList);
