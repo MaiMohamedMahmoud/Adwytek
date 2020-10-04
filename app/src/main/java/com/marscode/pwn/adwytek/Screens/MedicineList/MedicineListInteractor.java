@@ -51,36 +51,6 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
                 // ...
             }
         });
-//        days = new ArrayList<>();
-//        days.add("Tu");
-//        days.add("Sat");
-//
-//        Date c = Calendar.getInstance().getTime();
-//        System.out.println("Current time => " + c);
-//
-//
-////        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-////        String formattedDate = df.format(c);
-//
-//        Dose dose1 = new Dose("Su", c, "2");
-//        List<Dose> doseList = new ArrayList<>();
-//        doseList.add(dose1);
-//
-//
-//        Medicine medicineOmega = new Medicine("Omega", c, c, "3", doseList);
-//        Medicine medicineVitamin = new Medicine("Vitamin", c, c, "2", doseList);
-//        Medicine medicineVitaminA = new Medicine("Vitamin A", c, c, "1", doseList);
-//        Medicine medicineVitaminB = new Medicine("Vitamin B", c, c, "1", doseList);
-//        Medicine medicineVitaminD = new Medicine("Vitamin D", c, c, "2", doseList);
-//        Medicine medicineVitaminE = new Medicine("Vitamin E", c, c, "3", doseList);
-//        Medicine medicineVitaminF = new Medicine("Vitamin F", c, c, "1", doseList);
-//        medicineList.add(medicineOmega);
-//        medicineList.add(medicineVitamin);
-//        medicineList.add(medicineVitaminA);
-//        medicineList.add(medicineVitaminB);
-//        medicineList.add(medicineVitaminD);
-//        medicineList.add(medicineVitaminE);
-//        medicineList.add(medicineVitaminF);
     }
 
     @Override
@@ -117,6 +87,22 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 
 
     }
+
+    /**
+     * static medicine list
+     */
+
+    //        Date c = Calendar.getInstance().getTime();
+    //        System.out.println("Current time => " + c);
+    //        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+    //        String formattedDate = df.format(c);
+
+    //        Dose dose1 = new Dose("Su", c, "2");
+    //        List<Dose> doseList = new ArrayList<>();
+    //        doseList.add(dose1);
+
+    //        Medicine medicineOmega = new Medicine("Omega", c, c, "3", doseList);
+    //       medicineList.add(medicineOmega);
 
 
 }

@@ -1,8 +1,5 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.marscode.pwn.adwytek.Model.Medicine;
 
@@ -34,15 +31,10 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
     public void onFinished(DataSnapshot dataSnapshot) {
         medicineList = new ArrayList<>();
         // Get Medicine list and use the values to update the UI
-        int i = 0;
-        Log.i("yarab get", dataSnapshot.getChildrenCount() + "");
         for (DataSnapshot med : dataSnapshot.getChildren()) {
             Medicine medicineObj = med.getValue(Medicine.class);
-            Log.i("yarab get" + i++, medicineObj.start_date + " " + medicineObj.frequency_of_intake + " " + medicineObj.Doses.size() + " " + medicineObj.name + "");
-
             medicineList.add(medicineObj);
         }
-
         medicineListView.setMedicineList(medicineList);
     }
 }
