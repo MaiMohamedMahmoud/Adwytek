@@ -37,7 +37,7 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     @Override
     public void getMedicineList(final OnFinishedListener listener) {
 
-        medicineRef = databaseReference.child("medicine");
+        medicineRef = databaseReference.child("user-medicine").child(auth.getUid());
         medicineRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,7 +82,7 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
         map.put("MedcineId", key);
 
         childUpdates.put("/medicine/" + key, medicineValues);
-        childUpdates.put("/user-medicine/" + auth.getUid() + "/" + key, "");
+        childUpdates.put("/user-medicine/" + auth.getUid() + "/" + key, medicineValues);
         databaseReference.updateChildren(childUpdates);
 
 
