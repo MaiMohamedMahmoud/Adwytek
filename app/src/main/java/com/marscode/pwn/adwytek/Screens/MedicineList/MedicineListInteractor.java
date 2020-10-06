@@ -104,5 +104,4 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     //        Medicine medicineOmega = new Medicine("Omega", c, c, "3", doseList);
     //       medicineList.add(medicineOmega);
 
-
 }
