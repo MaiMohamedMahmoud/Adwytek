@@ -18,7 +18,7 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
 
     @Override
     public void getMedicineList() {
-        medicineListInteractor.getMedicineList(this);
+        medicineListInteractor.getMedicineListByUserId(this);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
+import com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineActivity;
+import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 
 import java.util.List;
 
@@ -64,7 +67,17 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     }
 
     public void addNewMedicine() {
-        medicineListPresenter.addNewMedicine();
+        //medicineListPresenter.addNewMedicine();
+        startNewMedicineActivity();
+    }
+
+    @Override
+    public void startNewMedicineActivity() {
+         /*
+         * here open the New medicine
+         */
+        Intent intent = new Intent(getContext(), NewMedicineActivity.class);
+        getActivity().startActivity(intent);
     }
 
     @Override

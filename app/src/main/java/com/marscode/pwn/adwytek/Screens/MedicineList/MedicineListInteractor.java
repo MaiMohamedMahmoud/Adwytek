@@ -35,7 +35,7 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     }
 
     @Override
-    public void getMedicineList(final OnFinishedListener listener) {
+    public void getMedicineListByUserId(final OnFinishedListener listener) {
 
         medicineRef = databaseReference.child("user-medicine").child(auth.getUid());
         medicineRef.addValueEventListener(new ValueEventListener() {

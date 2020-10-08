@@ -14,12 +14,13 @@ interface MedicineListInterface {
             void onFinished(DataSnapshot dataSnapshot);
         }
 
-        void getMedicineList(OnFinishedListener listener);
+        void getMedicineListByUserId(OnFinishedListener listener);
 
         void addNewMedicine();
     }
 
     interface MedicineListView {
+        void startNewMedicineActivity();
         void setMedicineList(List<Medicine> medicineList);
     }
 

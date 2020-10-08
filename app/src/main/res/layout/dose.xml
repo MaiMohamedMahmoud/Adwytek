@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="@color/bg">
+
+    <Button
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:text="@string/time"
+        android:background="@android:color/transparent"
+        android:textSize="15sp" />
+
+
+
+    <EditText
+        android:id="@+id/dose_quantity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:paddingStart="15dp"
+        android:text="@string/dose_quantity"
+        android:autofillHints="" />
+
+
+
+</LinearLayout>
