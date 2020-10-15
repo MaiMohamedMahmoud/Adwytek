@@ -5,11 +5,13 @@
 <!--    <color name="colorPrimaryDark">#208077</color>-->
 
     <color name="colorPrimary">#e07a5f</color>
+    <color name="colorPrimarylight">#f3c780</color>
     <color name="colorPrimaryDark">#FFC16A52</color>
+    <color name="color_background">#264653</color>
 
     <!-- the Button colors -->
     <color name="btn_color">#81b29a</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#76A18C</color>
     <!-- the Text colors -->
     <color name="colorText">#81b29a</color>
 
