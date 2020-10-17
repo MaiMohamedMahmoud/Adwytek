@@ -31,7 +31,6 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     MedicineListInteractor(FirebaseAuth auth, DatabaseReference database) {
         this.auth = auth;
         this.databaseReference = database;
-
     }
 
     @Override
@@ -66,11 +65,11 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 //        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 //        String formattedDate = df.format(c);
 
-        Dose dose1 = new Dose("Su", c, "2");
-        Dose dose2 = new Dose("Tu", c, "3");
+       // Dose dose1 = new Dose("Su", c, "2");
+       // Dose dose2 = new Dose("Tu", c, "3");
         List<Dose> doseList = new ArrayList<>();
-        doseList.add(dose1);
-        doseList.add(dose2);
+        //doseList.add(dose1);
+        //doseList.add(dose2);
 
 
         Medicine medicineOmega = new Medicine("Omega", c, c, "3", doseList);

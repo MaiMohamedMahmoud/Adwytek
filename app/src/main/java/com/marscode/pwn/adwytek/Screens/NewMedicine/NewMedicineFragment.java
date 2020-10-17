@@ -19,7 +19,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.marscode.pwn.adwytek.Model.Dose;
+import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.SingUp.RegisterInteractor;
 import com.marscode.pwn.adwytek.Screens.SingUp.RegisterPresenter;
@@ -36,35 +40,47 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class NewMedicineFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class NewMedicineFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, View.OnFocusChangeListener {
     LinearLayout medication_dose_data;
     View doseView;
     NewMedicinePresenter newMedicinePresenter;
+    NewMedicineInteractor newMedicineInteractor;
     TextView txt_dose_time;
+    EditText txt_dose_quantity;
+    EditText edit_txt_medicine_name;
     Button start_btn;
     Button end_btn;
-    Button btn_mon;
-    Button btn_tue;
-    Button btn_wen;
-    Button btn_thu;
-    Button btn_fri;
-    Button btn_sat;
-    Button btn_sun;
+    Button btn_mon, btn_tue, btn_wen, btn_thu, btn_fri, btn_sat, btn_sun;
+    Date startDate, endDate, date_picker;
     private int mYear, mMonth, mDay, mHour, mMinute;
     List<String> timeList;
+    List<String> daysList;
+    List<Dose> doseList;
+    List<String> doseTimeList;
+    List<String> doseQuantityList;
+    long frequency_of_intake;
+    Button addMedicineBtn;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_medicine, container, false);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         medication_dose_data = view.findViewById(R.id.dose_container);
         start_btn = view.findViewById(R.id.btn_start_date);
         end_btn = view.findViewById(R.id.btn_end_date);
+        addMedicineBtn = view.findViewById(R.id.save);
+        edit_txt_medicine_name = view.findViewById(R.id.edit_txt_medicine_name);
+        daysList = new ArrayList<>();
+        doseList = new ArrayList<>();
         btn_mon = view.findViewById(R.id.btn_mon);
         btn_tue = view.findViewById(R.id.btn_tue);
         btn_wen = view.findViewById(R.id.btn_wen);
@@ -72,8 +88,11 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         btn_fri = view.findViewById(R.id.btn_fri);
         btn_sat = view.findViewById(R.id.btn_sat);
         btn_sun = view.findViewById(R.id.btn_sun);
-        newMedicinePresenter = new NewMedicinePresenter();
+        newMedicineInteractor = new NewMedicineInteractor(mAuth, mDatabase);
+        newMedicinePresenter = new NewMedicinePresenter(newMedicineInteractor);
         timeList = new ArrayList<>();
+        doseTimeList = new ArrayList<>();
+        doseQuantityList = new ArrayList<>();
         Spinner spinner_frequency_time = view.findViewById(R.id.frequency_time);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter_frequency_time = ArrayAdapter.createFromResource(getContext(),
@@ -93,6 +112,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         btn_fri.setOnClickListener(this);
         btn_sat.setOnClickListener(this);
         btn_sun.setOnClickListener(this);
+        addMedicineBtn.setOnClickListener(this);
 
         return view;
     }
@@ -102,6 +122,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         Log.i("yaraaaaab yaraaab", adapterView.getItemAtPosition(pos) + " " + l);
         medication_dose_data.removeAllViewsInLayout();
         for (int i = 0; i <= l; i++) {
+            frequency_of_intake = l;
             addDosePerTime(view);
         }
     }
@@ -112,7 +133,9 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         int childCount = medication_dose_data.getChildCount() - 1;
         for (int i = 0; i <= childCount; i++) {
             txt_dose_time = doseView.findViewById(R.id.dose_time);
+            txt_dose_quantity = doseView.findViewById(R.id.dose_quantity);
             txt_dose_time.setOnClickListener(this);
+            txt_dose_quantity.setOnFocusChangeListener(this);
         }
     }
 
@@ -133,6 +156,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         final Calendar cal = Calendar.getInstance();
         mHour = cal.get(Calendar.HOUR_OF_DAY);
         mMinute = cal.get(Calendar.MINUTE);
+
     }
 
     public void showDatePickerDialog(final Button buttonView) {
@@ -143,9 +167,16 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                         final Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         calendar.set(year, monthOfYear, dayOfMonth);
-                        Date date_picker = calendar.getTime();
+                        date_picker = calendar.getTime();
+                        Log.i("yarab ", "inside" + date_picker);
                         String dateString = sdf.format(date_picker);
                         buttonView.setText(dateString);
+                        if (buttonView == start_btn) {
+                            startDate = date_picker;
+                        }
+                        if (buttonView == end_btn) {
+                            endDate = date_picker;
+                        }
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -156,10 +187,42 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        txt.setText(hourOfDay + ":" + minute);
+                        String dateString = hourOfDay + ":" + minute;
+                        txt.setText(dateString);
+
+                        doseTimeList.add(dateString);
+                        Log.i("yarab", dateString.toString() + "time pich" + dateString);
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, true);
         timePickerDialog.show();
+    }
+
+    public void addNewMedicine() {
+
+
+     /*   Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        Dose dose1 = new Dose("Su", c, "2");
+        Dose dose2 = new Dose("Tu", c, "3");
+*/
+
+        for (int days = 0; days < daysList.size(); days++) {
+            for (int dose = 0; dose <= frequency_of_intake; dose++) {
+                Log.i("yarab inside loop", frequency_of_intake + "dose time" + doseTimeList.get(dose) + doseQuantityList.get(dose));
+                Dose doseObj = new Dose(daysList.get(days),
+                        doseTimeList.get(dose),
+                        doseQuantityList.get(dose));
+                doseList.add(doseObj);
+            }
+        }
+        /*doseList.add(dose1);
+        doseList.add(dose2);*/
+
+        Medicine medicineOmega = new Medicine(edit_txt_medicine_name.getText().toString(), startDate, endDate, frequency_of_intake + 1 + "", doseList);
+
+        Log.i("yarab", edit_txt_medicine_name.getText().toString() + "start " + startDate + "End " + endDate + "Freq " + frequency_of_intake + "dose " + doseList.size());
+        newMedicinePresenter.addNewMedicine(medicineOmega);
     }
 
     @Override
@@ -171,35 +234,54 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                 getCurrentDate();
                 //Launch Date Picker Dialog
                 showDatePickerDialog(start_btn);
-
+                Log.i("yarab ", startDate + "date picker " + date_picker);
                 break;
             case R.id.btn_end_date:
                 // Get Current Date
                 getCurrentDate();
                 //Launch Date Picker Dialog
                 showDatePickerDialog(end_btn);
+                Log.i("yarab ", endDate + "date picker " + date_picker);
                 break;
 
             case R.id.btn_mon:
-                btn_mon.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_mon.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Mo");
                 break;
             case R.id.btn_tue:
-                btn_tue.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_tue.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Tue");
                 break;
             case R.id.btn_wen:
-                btn_wen.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_wen.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Wen");
                 break;
             case R.id.btn_thu:
-                btn_thu.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_thu.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Thu");
                 break;
             case R.id.btn_fri:
-                btn_fri.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_fri.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Fr");
                 break;
             case R.id.btn_sat:
-                btn_sat.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_sat.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Sa");
                 break;
             case R.id.btn_sun:
-                btn_sun.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));;
+                btn_sun.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
+                ;
+                daysList.add("Su");
+                break;
+
+            case R.id.save:
+                addNewMedicine();
                 break;
             default:
                 // Get Current Time
@@ -212,4 +294,20 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
 
     }
 
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        String input;
+        EditText editText;
+        if (!hasFocus) {
+            editText = (EditText) view;
+            input = editText.getText().toString();
+            doseQuantityList.add(input);
+        } else {
+            editText = (EditText) view;
+            input = editText.getText().toString();
+            if (doseQuantityList.contains(input)) {
+                doseQuantityList.remove(input);
+            }
+        }
+    }
 }
