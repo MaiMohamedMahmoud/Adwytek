@@ -12,18 +12,34 @@
         android:layout_margin="15dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_txt_medicine_name"
+<!--        <EditText-->
+<!--            android:id="@+id/edit_txt_medicine_name"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/edittxt_custom"-->
+<!--            android:hint="@string/medicineName"-->
+<!--            android:importantForAutofill="no"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="15dp"-->
+<!--            android:textSize="15sp" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/medicine_name_text_input_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittxt_custom"
-            android:hint="@string/medicineName"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="15dp"
-            android:textSize="15sp" />
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/edit_txt_medicine_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:ems="10"
+                android:hint="@string/medicineName"
+                android:inputType="text"
+                android:autofillHints="" />
 
+        </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
             android:id="@+id/medication_dose_data"
             android:layout_width="match_parent"

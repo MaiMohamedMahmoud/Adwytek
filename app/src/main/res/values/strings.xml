@@ -26,8 +26,8 @@
     <string name="successLogin">Successfully Logged In</string>
     <string name="success_register">Registration successful!</string>
     <string name="register_fail">Registration failed!! Please try again later"</string>
-    <string name="time">8:00</string>
-    <string name="dose_quantity">1.0</string>
+    <string name="time">Time</string>
+    <string name="dose_quantity">Quantity</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="calendar">Calendar</string>
@@ -41,7 +41,9 @@
     <string name="Fri">Fr</string>
     <string name="Sat">Sa</string>
     <string name="Sun">Su</string>
-
+    <string name="error_date">Please, Select a date a valid date</string>
+    <string name="medicine_required">You must enter medicine name</string>
+    <string name="quanity_required">You must enter Quantity dose</string>
 
 
 </resources>

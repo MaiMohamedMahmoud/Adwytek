@@ -39,6 +39,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-database:19.4.0'
 
+
+    //validation lib
+    //https://github.com/thyrlian/AwesomeValidation
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

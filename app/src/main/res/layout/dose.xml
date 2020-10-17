@@ -2,31 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="@color/bg">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/dose_time"
         android:layout_width="0dp"
-        android:paddingTop="10dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
+        android:paddingTop="20dp"
         android:text="@string/time"
         android:textSize="15sp" />
 
 
-    <EditText
-        android:id="@+id/dose_quantity"
+    <!--    <EditText-->
+    <!--        android:id="@+id/dose_quantity"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_weight="0.5"-->
+    <!--        android:autofillHints=""-->
+    <!--        android:inputType="number"-->
+    <!--        android:paddingStart="15dp"-->
+    <!--        android:text="@string/dose_quantity"-->
+    <!--        android:textSize="15sp" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dose_quantity_text_input_layout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:inputType="number"
-        android:textSize="15sp"
-        android:paddingStart="15dp"
-        android:text="@string/dose_quantity"
-        android:autofillHints="" />
+        android:layout_weight="0.5">
 
+        <EditText
+            android:id="@+id/dose_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:autofillHints=""
+            android:hint="@string/dose_quantity"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>
