@@ -73,6 +73,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     AwesomeValidation mAwesomeValidation;
+    boolean flag;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         View view = inflater.inflate(R.layout.fragment_new_medicine, container, false);
         mAwesomeValidation = new AwesomeValidation(BASIC);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        flag = false;
         medication_dose_data = view.findViewById(R.id.dose_container);
         start_btn = view.findViewById(R.id.btn_start_date);
         end_btn = view.findViewById(R.id.btn_end_date);
@@ -119,6 +121,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         getCurrentDate();
         start_btn.setText(sdf.format(currentDate.getTime()));
         end_btn.setText(sdf.format(currentDate.getTime()));
+        startDate = endDate = currentDate.getTime();
         start_btn.setOnClickListener(this);
         end_btn.setOnClickListener(this);
         btn_mon.setOnClickListener(this);
@@ -154,6 +157,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
             txt_dose_quantity = doseView.findViewById(R.id.dose_quantity);
             dose_txt_input_layout = doseView.findViewById(R.id.dose_quantity_text_input_layout);
             txt_dose_time.setOnClickListener(this);
+
         }
         dose_txt_input_layout.getEditText().addTextChangedListener(this);
 
@@ -223,9 +227,9 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (txt.getText().toString() == getText(R.string.time)) {
+
                             String dateString = hourOfDay + ":" + minute;
                             txt.setText(dateString);
-
                             doseTimeList.add(dateString);
                             Log.i("yarab", dateString.toString() + "time pich" + dateString);
                         } else {
@@ -281,43 +285,51 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                 btn_mon.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Mo");
                 btn_mon.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_tue:
                 btn_tue.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 ;
                 daysList.add("Tue");
                 btn_tue.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_wen:
                 btn_wen.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Wen");
                 btn_wen.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_thu:
                 btn_thu.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Thu");
                 btn_thu.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_fri:
                 btn_fri.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Fr");
                 btn_fri.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_sat:
                 btn_sat.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Sa");
                 btn_sat.setEnabled(false);
+                flag = true;
                 break;
             case R.id.btn_sun:
                 btn_sun.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorxml));
                 daysList.add("Su");
                 btn_sun.setEnabled(false);
+                flag = true;
                 break;
 
             case R.id.save:
 
                 boolean valid = validate();
                 if (valid) {
+
                     addNewMedicine();
                 }
                 break;
@@ -333,8 +345,23 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
 
     private boolean validate() {
         mAwesomeValidation.addValidation(getActivity(), R.id.medicine_name_text_input_layout, "[a-zA-Z\\s]+", R.string.medicine_required);
-        mAwesomeValidation.addValidation(getActivity(),R.id.dose_quantity_text_input_layout,"[0-9]",R.string.quanity_required);
-        mAwesomeValidation.addValidation(getActivity(),R.id.dose_time,"[0-9]",R.string.medicine_required);
+
+        int childCount = medication_dose_data.getChildCount() - 1;
+        for (int i = 0; i <= childCount; i++) {
+            mAwesomeValidation.addValidation(getActivity(), R.id.dose_quantity_text_input_layout, "[0-9]", R.string.quanity_required);
+            if (txt_dose_time.getText() == getString(R.string.time)) {
+                Toast.makeText(getContext(), getString(R.string.dose_time_error), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+        if (flag == false) {
+            Toast.makeText(getContext(), getString(R.string.selectedDays), Toast.LENGTH_LONG).show();
+            return flag;
+        }
+        if (doseTimeList.size() < frequency_of_intake+1 || doseQuantityList.size() < frequency_of_intake+1) {
+            Toast.makeText(getContext(), getString(R.string.dose_time_error), Toast.LENGTH_LONG).show();
+            return false;
+        }
         return mAwesomeValidation.validate();
     }
 
