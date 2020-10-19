@@ -61,7 +61,7 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
                 addNewMedicine();
             }
         });
-        medicineListPresenter = new MedicineListPresenter(this, new MedicineListInteractor(mAuth, mDatabase));
+        medicineListPresenter = new MedicineListPresenter(getContext(),this, new MedicineListInteractor(mAuth, mDatabase));
         medicineListPresenter.getMedicineList();
         return view;
     }

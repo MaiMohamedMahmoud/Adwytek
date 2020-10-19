@@ -1,10 +1,14 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
+import android.content.Context;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DataSnapshot;
+import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
 
+import java.util.Calendar;
 import java.util.List;
 
 interface MedicineListInterface {
@@ -15,8 +19,7 @@ interface MedicineListInterface {
         }
 
         void getMedicineListByUserId(OnFinishedListener listener);
-
-        void addNewMedicine();
+        void setAlarm(Context context, Calendar calendar);
     }
 
     interface MedicineListView {
@@ -26,8 +29,7 @@ interface MedicineListInterface {
 
     interface MedicineListPresenter {
         void getMedicineList();
-
-        void addNewMedicine();
+        void setAlarm(Context context,List<Dose> doseList);
     }
 
 }
