@@ -54,7 +54,6 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
 
-
         intent.putExtra("Title", "title");
 
         //requested code (0) here should be replaced with alarmID

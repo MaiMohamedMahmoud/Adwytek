@@ -19,17 +19,22 @@ interface MedicineListInterface {
         }
 
         void getMedicineListByUserId(OnFinishedListener listener);
+
         void setAlarm(Context context, Calendar calendar);
     }
 
     interface MedicineListView {
         void startNewMedicineActivity();
+
         void setMedicineList(List<Medicine> medicineList);
     }
 
     interface MedicineListPresenter {
         void getMedicineList();
-        void setAlarm(Context context,List<Dose> doseList);
+
+        void setAlarm(Context context, List<Medicine> medicineList);
+
+        void set(Context context, Calendar calendar);
     }
 
 }

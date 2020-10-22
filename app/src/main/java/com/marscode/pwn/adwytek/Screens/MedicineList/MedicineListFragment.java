@@ -2,10 +2,12 @@ package com.marscode.pwn.adwytek.Screens.MedicineList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +18,9 @@ import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineActivity;
 import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -31,7 +36,6 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     FirebaseAuth mAuth;
     FloatingActionButton fab_new_medicine;
     DatabaseReference mDatabase;
-
 
 
     @Override
@@ -61,7 +65,7 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
                 addNewMedicine();
             }
         });
-        medicineListPresenter = new MedicineListPresenter(getContext(),this, new MedicineListInteractor(mAuth, mDatabase));
+        medicineListPresenter = new MedicineListPresenter(getContext(), this, new MedicineListInteractor(mAuth, mDatabase));
         medicineListPresenter.getMedicineList();
         return view;
     }
@@ -69,11 +73,12 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     public void addNewMedicine() {
         //medicineListPresenter.addNewMedicine();
         startNewMedicineActivity();
+
     }
 
     @Override
     public void startNewMedicineActivity() {
-         /*
+        /*
          * here open the New medicine
          */
         Intent intent = new Intent(getContext(), NewMedicineActivity.class);
@@ -82,6 +87,7 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
 
     @Override
     public void setMedicineList(List<Medicine> medicineList) {
+        //medicineListPresenter.setAlarm(getContext(), medicineList);
         MedicineListAdapter medicinelistAdapter = new MedicineListAdapter(medicineList);
         recyclerMedicine.setAdapter(medicinelistAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

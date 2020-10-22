@@ -259,9 +259,9 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         if (endDate.before(startDate)) {
             endDate = startDate;
         }
-        Medicine medicineOmega = new Medicine(edit_txt_medicine_name.getText().toString(), startDate, endDate, frequency_of_intake + 1 + "", doseList);
+        Medicine medicineOmega = new Medicine(edit_txt_medicine_name.getText().toString(), startDate, endDate, frequency_of_intake + 1 + "");
 
-        newMedicinePresenter.addNewMedicine(medicineOmega);
+        newMedicinePresenter.addNewMedicine(medicineOmega,doseList);
     }
 
     @Override

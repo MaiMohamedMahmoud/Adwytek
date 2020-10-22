@@ -36,8 +36,8 @@ dependencies {
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
-    implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.firebase:firebase-database:19.3.0'
 
 
     //validation lib

@@ -1,17 +1,23 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,14 +67,29 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             String list_of_days = "";
             String dateStartedFormatted = date.format(medicineList.get(position).start_date);
             String dateEndFormatted = date.format(medicineList.get(position).end_date);
+            final HashMap<String, Dose> hashMap = medicineList.get(position).doses;
+            final List<Dose> listing = new ArrayList<>();
 
-            for (int i = 0; i < medicineList.get(position).Doses.size(); i++) {
-                if (i == medicineList.get(position).Doses.size() - 1) {
-                    list_of_days = list_of_days + medicineList.get(position).Doses.get(i).day;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                hashMap.keySet().forEach(new Consumer<String>() {
+                    @Override
+                    public void accept(String key) {
+                        System.out.println(key + " yarab" + hashMap.get(key));
+                        Log.i("yarab", key + " " + hashMap.get(key));
+                        listing.add(hashMap.get(key));
+                    }
+                });
+            }
+
+            for (int i = 0; i < listing.size(); i++) {
+                Log.i("yarab list adapter", listing.get(i).day);
+                if (i == listing.size() - 1) {
+                    list_of_days = list_of_days + listing.get(i).day;
                 } else {
-                    list_of_days = list_of_days + medicineList.get(position).Doses.get(i).day + " ,";
+                    list_of_days = list_of_days + listing.get(i).day + " ,";
                 }
             }
+
             txt_medicine_times.setText(medicineList.get(position).getFrequency_of_intake() + "x per day | " + list_of_days);
 
             txt_medicine_Date.setText(dateStartedFormatted + " - " + dateEndFormatted);

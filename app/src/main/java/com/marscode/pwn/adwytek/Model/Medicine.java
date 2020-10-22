@@ -1,9 +1,13 @@
 package com.marscode.pwn.adwytek.Model;
 
+import android.util.Log;
+
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,18 +20,17 @@ public class Medicine {
     public Date start_date;
     public Date end_date;
     public String frequency_of_intake;
-    public List<Dose> Doses;
+    public HashMap<String, Dose> doses;
 
     public Medicine() {
 
     }
 
-    public Medicine(String name, Date start_date, Date end_date, String frequency_of_intake, List<Dose> doseList) {
+    public Medicine(String name, Date start_date, Date end_date, String frequency_of_intake) {
         this.name = name;
         this.start_date = start_date;
         this.end_date = end_date;
         this.frequency_of_intake = frequency_of_intake;
-        this.Doses = doseList;
     }
 
     public String getName() {
@@ -46,20 +49,21 @@ public class Medicine {
         return frequency_of_intake;
     }
 
-    public List<Dose> getDoseList() {
-        return Doses;
-    }
+//    public List<Dose> getDoseList() {
+//        return doses;
+//    }
 
     // ...
 
+
     @Exclude
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap(DatabaseReference databaseReference, String medicineKey) {
+
         HashMap<String, Object> medicine = new HashMap<>();
         medicine.put("name", name);
         medicine.put("start_date", start_date);
         medicine.put("end_date", end_date);
         medicine.put("frequency_of_intake", frequency_of_intake);
-        medicine.put("Doses", Doses);
         return medicine;
     }
 }

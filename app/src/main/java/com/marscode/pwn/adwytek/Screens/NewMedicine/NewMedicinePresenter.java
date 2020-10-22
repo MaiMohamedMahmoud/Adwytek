@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
+
+import java.util.List;
 
 public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePresenter {
 
@@ -25,7 +28,7 @@ public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePre
     }
 
     @Override
-    public void addNewMedicine(Medicine medicine) {
-        this.newMedicineInteractor.addNewMedicine(medicine);
+    public void addNewMedicine(Medicine medicine, List<Dose> doseList) {
+        this.newMedicineInteractor.addNewMedicine(medicine,doseList);
     }
 }

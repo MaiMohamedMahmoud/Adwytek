@@ -1,6 +1,7 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.marscode.pwn.adwytek.Model.Dose;
@@ -9,6 +10,7 @@ import com.marscode.pwn.adwytek.Model.Medicine;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.IntegerRes;
 
@@ -30,26 +32,32 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
     }
 
     @Override
-    public void setAlarm(Context context, List<Dose> doseList) {
+    public void setAlarm(Context context, List<Medicine> medicineList) {
 
-
-        for (int i = 0; i < doseList.size(); i++) {
-            String string = doseList.get(i).time;
-            String[] parts = string.split(":");
-            String hours = parts[0];
-            String min = parts[1];
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hours));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(min));
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            calendar.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH);
-            medicineListInteractor.setAlarm(context, calendar);
-
+        for (int i = 0; i < medicineList.size(); i++) {
+//            for (int j = 0; j < medicineList.get(i).doses.size(); j++) {
+//                String string = medicineList.get(i).doses.get(j).time;
+//                String[] parts = string.split(":");
+//                String hours = parts[0];
+//                String min = parts[1];
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTimeInMillis(System.currentTimeMillis());
+//                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hours));
+//                calendar.set(Calendar.MINUTE, Integer.parseInt(min));
+//                Toast.makeText(context, min + " min" + hours + " hours", Toast.LENGTH_LONG).show();
+//                Random random = new Random();
+//
+//                if(!calendar.before(Calendar.getInstance())){
+//                    medicineListInteractor.setAlarm(context, calendar);
+//                }
+//            }
         }
     }
 
+    @Override
+    public void set(Context context, Calendar calendar) {
+        medicineListInteractor.setAlarm(context, calendar);
+    }
 
     @Override
     public void onFinished(DataSnapshot dataSnapshot) {
@@ -57,7 +65,6 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
         // Get Medicine list and use the values to update the UI
         for (DataSnapshot med : dataSnapshot.getChildren()) {
             Medicine medicineObj = med.getValue(Medicine.class);
-            setAlarm(context, medicineObj.getDoseList());
             medicineList.add(medicineObj);
 
         }
