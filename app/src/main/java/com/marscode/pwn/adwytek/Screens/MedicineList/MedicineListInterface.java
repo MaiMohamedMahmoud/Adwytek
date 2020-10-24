@@ -20,7 +20,7 @@ interface MedicineListInterface {
 
         void getMedicineListByUserId(OnFinishedListener listener);
 
-        void setAlarm(Context context, Calendar calendar);
+        void setAlarm(Context context, Calendar calendar,int AlarmId);
     }
 
     interface MedicineListView {
@@ -34,7 +34,6 @@ interface MedicineListInterface {
 
         void setAlarm(Context context, List<Medicine> medicineList);
 
-        void set(Context context, Calendar calendar);
     }
 
 }

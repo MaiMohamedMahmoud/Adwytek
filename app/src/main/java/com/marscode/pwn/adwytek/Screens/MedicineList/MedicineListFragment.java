@@ -87,11 +87,12 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
 
     @Override
     public void setMedicineList(List<Medicine> medicineList) {
-        //medicineListPresenter.setAlarm(getContext(), medicineList);
+        Log.i("yarab inside fragment",medicineList.size()+"");
         MedicineListAdapter medicinelistAdapter = new MedicineListAdapter(medicineList);
         recyclerMedicine.setAdapter(medicinelistAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerMedicine.setLayoutManager(linearLayoutManager);
+        //medicineListPresenter.setAlarm(getContext(), medicineList);
 
     }
 }

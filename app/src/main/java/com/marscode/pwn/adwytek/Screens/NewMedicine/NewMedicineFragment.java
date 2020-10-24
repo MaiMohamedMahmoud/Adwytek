@@ -1,9 +1,14 @@
 package com.marscode.pwn.adwytek.Screens.NewMedicine;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,14 +37,17 @@ import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.SingUp.RegisterInteractor;
 import com.marscode.pwn.adwytek.Screens.SingUp.RegisterPresenter;
+import com.marscode.pwn.adwytek.Screens.broadcastReciever.AlarmBroadcastReceiver;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,6 +76,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     List<Dose> doseList;
     List<String> doseTimeList;
     List<String> doseQuantityList;
+    List<Calendar> calendarList;
     long frequency_of_intake;
     Button addMedicineBtn;
     private DatabaseReference mDatabase;
@@ -96,6 +105,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         medicine_name_txt_input_layout = view.findViewById(R.id.medicine_name_text_input_layout);
         daysList = new ArrayList<>();
         doseList = new ArrayList<>();
+        calendarList = new ArrayList<>();
         btn_mon = view.findViewById(R.id.btn_mon);
         btn_tue = view.findViewById(R.id.btn_tue);
         btn_wen = view.findViewById(R.id.btn_wen);
@@ -168,13 +178,14 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
 
     }
 
-    public void getCurrentDate() {
+    public Calendar getCurrentDate() {
         final Calendar cal = Calendar.getInstance();
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
         cal.set(mYear, mMonth, mDay);
         currentDate = cal;
+        return cal;
     }
 
     public void getCurrentTime() {
@@ -196,7 +207,6 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                             Toast.makeText(getContext(), getString(R.string.error_date), Toast.LENGTH_LONG).show();
                         } else {
                             date_picker = calendar.getTime();
-                            Log.i("yarab ", "inside" + date_picker);
                             String dateString = sdf.format(date_picker);
                             buttonView.setText(dateString);
                             if (buttonView == start_btn) {
@@ -224,26 +234,55 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     public void showTimePickerDialog(final TextView txt) {
         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
                 new TimePickerDialog.OnTimeSetListener() {
+
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (txt.getText().toString() == getText(R.string.time)) {
-
                             String dateString = hourOfDay + ":" + minute;
                             txt.setText(dateString);
                             doseTimeList.add(dateString);
-                            Log.i("yarab", dateString.toString() + "time pich" + dateString);
                         } else {
+
+                            //remove previous txt before adding the new one.
                             doseTimeList.remove(txt.getText().toString());
                             String dateString = hourOfDay + ":" + minute;
                             txt.setText(dateString);
                             doseTimeList.add(dateString);
-                            Log.i("yarab", dateString.toString() + "time pich" + dateString);
-
                         }
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
     }
+
+
+    private void setAlarm(Calendar calendar) {
+
+        int AlarmId = new Random().nextInt(Integer.MAX_VALUE);
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmBroadcastReceiver.class);
+        intent.putExtra("startDate", startDate.getTime());
+        intent.putExtra("endDate", endDate.getTime());
+        intent.putExtra("dayList",(ArrayList<String>) daysList );
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(getContext(), AlarmId, intent, 0);
+        if (daysList.size() > 1) {
+            //if there is more than one day then the alarm need to be repeated.
+            alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY,
+                    alarmPendingIntent
+            );
+        } else {
+            //Alarm only in one day so no need for repeating
+            alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    alarmPendingIntent
+            );
+        }
+
+    }
+
 
     public void addNewMedicine() {
 
@@ -255,13 +294,30 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                 doseList.add(doseObj);
             }
         }
-
         if (endDate.before(startDate)) {
             endDate = startDate;
         }
+        for (int i = 0; i < doseTimeList.size(); i++) {
+            setAlarm(getCalendar(doseTimeList.get(i)));
+            //alarmIsToday(startDate, endDate, daysList);
+        }
         Medicine medicineOmega = new Medicine(edit_txt_medicine_name.getText().toString(), startDate, endDate, frequency_of_intake + 1 + "");
 
-        newMedicinePresenter.addNewMedicine(medicineOmega,doseList);
+        newMedicinePresenter.addNewMedicine(medicineOmega, doseList);
+    }
+
+    private Calendar getCalendar(String dose) {
+        String[] parts = dose.split(":");
+        String hours = parts[0];
+        String min = parts[1];
+        Log.i("yarab dose prev", Integer.parseInt(hours) + "min" + Integer.parseInt(min) + " txt size " + doseTimeList.size());
+
+        //remove the previous calender
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hours));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(min));
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
     }
 
     @Override
@@ -329,7 +385,6 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
 
                 boolean valid = validate();
                 if (valid) {
-
                     addNewMedicine();
                 }
                 break;
@@ -358,7 +413,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
             Toast.makeText(getContext(), getString(R.string.selectedDays), Toast.LENGTH_LONG).show();
             return flag;
         }
-        if (doseTimeList.size() < frequency_of_intake+1 || doseQuantityList.size() < frequency_of_intake+1) {
+        if (doseTimeList.size() < frequency_of_intake + 1 || doseQuantityList.size() < frequency_of_intake + 1) {
             Toast.makeText(getContext(), getString(R.string.dose_time_error), Toast.LENGTH_LONG).show();
             return false;
         }

@@ -49,7 +49,7 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
     }
 
     @Override
-    public void setAlarm(Context context,Calendar calendar) {
+    public void setAlarm(Context context,Calendar calendar,int AlarmId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
@@ -57,7 +57,7 @@ class MedicineListInteractor implements MedicineListInterface.MedicineListIntera
         intent.putExtra("Title", "title");
 
         //requested code (0) here should be replaced with alarmID
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,0, intent, 0);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,AlarmId, intent, 0);
 
         alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,

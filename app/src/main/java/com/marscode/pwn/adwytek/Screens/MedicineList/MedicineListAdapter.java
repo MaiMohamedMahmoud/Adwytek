@@ -74,15 +74,12 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 hashMap.keySet().forEach(new Consumer<String>() {
                     @Override
                     public void accept(String key) {
-                        System.out.println(key + " yarab" + hashMap.get(key));
-                        Log.i("yarab", key + " " + hashMap.get(key));
                         listing.add(hashMap.get(key));
                     }
                 });
             }
 
             for (int i = 0; i < listing.size(); i++) {
-                Log.i("yarab list adapter", listing.get(i).day);
                 if (i == listing.size() - 1) {
                     list_of_days = list_of_days + listing.get(i).day;
                 } else {
