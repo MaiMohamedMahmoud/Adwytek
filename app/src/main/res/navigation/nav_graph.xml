@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/action_home"
-        android:label="@string/ListFragment"
         android:name="com.marscode.pwn.adwytek.Screens.MedicineList.MedicineListFragment"
+        android:label="@string/ListFragment"
         tools:layout="@layout/fragment_medicine_list"></fragment>
 
-   <fragment
-       android:id="@+id/action_Add"
-       android:label="@string/AddMedicine"
-       android:name="com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineFragment"
-       tools:layout="@layout/fragment_new_medicine"></fragment>
+    <fragment
+        android:id="@+id/action_Add"
+        android:name="com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineFragment"
+        android:label="@string/AddMedicine"
+        tools:layout="@layout/fragment_new_medicine"></fragment>
 
 
     <fragment
         android:id="@+id/action_nearby"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:label="@string/Map"
-        android:name="com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineFragment"
-        tools:layout="@layout/fragment_new_medicine"></fragment>
+        tools:layout="@layout/activity_maps"></fragment>
 </navigation>
