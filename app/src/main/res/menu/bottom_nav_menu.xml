@@ -2,21 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_recents"
+        android:id="@+id/action_home"
         android:enabled="true"
-        android:icon="@drawable/ic_add_floating"
-        android:title="Recents"
+        android:icon="@drawable/ic_round_person_24"
+        android:title="@string/profile"
         app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_Add"
         android:enabled="true"
-        android:icon="@drawable/ic_appintro_navigate_before_white"
-        android:title="Favorites"
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/Add"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_nearby"
         android:enabled="true"
-        android:icon="@drawable/ic_appintro_navigate_next_white"
-        android:title="Nearby"
+        android:icon="@drawable/ic_round_map_24"
+        android:title="@string/nearby"
         app:showAsAction="ifRoom" />
 </menu>

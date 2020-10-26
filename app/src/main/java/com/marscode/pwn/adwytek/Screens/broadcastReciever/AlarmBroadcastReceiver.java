@@ -1,9 +1,13 @@
 package com.marscode.pwn.adwytek.Screens.broadcastReciever;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.method.DateTimeKeyListener;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.marscode.pwn.adwytek.Screens.RingingAlarm.RingActivity;
 
@@ -21,7 +25,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive");
-
+        int alarmId = intent.getIntExtra("alarmID", 0);
         long startDateLong = intent.getLongExtra("startDate", -1);
         long endDateLong = intent.getLongExtra("endDate", -1);
         Date startDate = new Date(startDateLong);
@@ -35,7 +39,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                 context.startActivity(newIntent);
             }
         } else {
-            cancelAlarm();
+            cancelAlarm(alarmId, context);
         }
 
 
@@ -47,7 +51,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         calendar.setTimeInMillis(System.currentTimeMillis());
         today = calendar.get(Calendar.DAY_OF_WEEK);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
+        Log.i("yarab Date alarm valid ", calendar.getTime().toString() + " is after startDate" + calendar.getTime().after(startDate) + " is equal startDate" + calendar.getTime().equals(startDate) + " is equal endDate " + calendar.getTime().equals(endDate) + " is before endDate" + calendar.getTime().before(endDate));
         if ((calendar.getTime().after(startDate) || calendar.getTime().equals(startDate)) && (calendar.getTime().equals(endDate) || calendar.getTime().before(endDate))) {
             Log.i("yarab Date", calendar.getTime().toString() + " List of days " + listDays.size());
             return true;
@@ -56,7 +60,16 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void cancelAlarm() {
+    private void cancelAlarm(int alarmId, Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0);
+        alarmManager.cancel(alarmPendingIntent);
+
+        //TODO ONLY FOR TESTING DELETE IT
+        String toastText = String.format("Alarm cancelled  ", alarmId);
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+
     }
 
     private boolean alarmIsToday(List<String> listOfDays) {

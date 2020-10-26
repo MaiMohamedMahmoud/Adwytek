@@ -202,7 +202,12 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         final Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                        calendar.set(year, monthOfYear, dayOfMonth);
+                        if(buttonView == end_btn){
+                            calendar.set(year, monthOfYear, dayOfMonth,23,59,59);
+                        }else{
+                            calendar.set(year, monthOfYear, dayOfMonth);
+                        }
+
                         if (calendar.before(currentDate)) {
                             Toast.makeText(getContext(), getString(R.string.error_date), Toast.LENGTH_LONG).show();
                         } else {
@@ -263,6 +268,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         intent.putExtra("startDate", startDate.getTime());
         intent.putExtra("endDate", endDate.getTime());
         intent.putExtra("dayList",(ArrayList<String>) daysList );
+        intent.putExtra("alarmID",AlarmId);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(getContext(), AlarmId, intent, 0);
         if (daysList.size() > 1) {
             //if there is more than one day then the alarm need to be repeated.
