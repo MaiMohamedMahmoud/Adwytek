@@ -19,8 +19,9 @@
 
 
     <fragment
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/action_nearby"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.marscode.pwn.adwytek.Screens.MapPage.MapsFragment"
         android:label="@string/Map"
         tools:layout="@layout/activity_maps"></fragment>
 </navigation>
