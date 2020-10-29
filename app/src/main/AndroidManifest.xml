@@ -53,12 +53,25 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </receiver> <!-- for map implementation -->
+        </receiver>
+        <receiver android:name=".Screens.Widget.MedicineAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/medicine_app_widget_info" />
+        </receiver>
+        <!-- for map implementation -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
+
+        <service android:name=".Screens.Widget.MedicineWidgetServie"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@ interface MedicineListInterface {
 
     interface MedicineListPresenter {
         void getMedicineList();
-
+        void setListMedicineSharedPreference(List<Medicine> medicineList);
         void setAlarm(Context context, List<Medicine> medicineList);
 
     }

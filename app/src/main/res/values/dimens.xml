@@ -7,4 +7,21 @@
     <dimen name="extra_large_text">40sp</dimen>
     <dimen name="xlarge_text">30sp</dimen>
     <dimen name="small_txt">10sp</dimen>
+
+
+    <dimen name="card_view_margin">4dp</dimen>
+    <dimen name="card_view_elevation">4dp</dimen>
+    <dimen name="card_view_corner_radius">4dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_extra_large">22dp</dimen>
+
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_extra_large">22sp</dimen>
+    <dimen name="widget_margin">4</dimen>
 </resources>

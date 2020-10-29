@@ -57,6 +57,11 @@
     <string name="AddMedicine">Add medicine</string>
     <string name="Map">Map Fragment</string>
     <string name="errorNearBy">Faild to return Nearst Location</string>
+    <string name="MedicineListPref">MedicineListPrefrence</string>
+    <string name="MedicineListObj">MedicineListObject</string>
+    <string name="medicine_name_widget">Medicine Name</string>
+    <string name="image_widget">Medicine Icon</string>
+    <string name="frequency_time_txt_widget">3</string>
 
 
 </resources>

@@ -1,13 +1,16 @@
 package com.marscode.pwn.adwytek.Screens.MedicineList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.gson.Gson;
 import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
+import com.marscode.pwn.adwytek.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,6 +85,20 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
             medicineList.add(medicineObj);
 
         }
+        setListMedicineSharedPreference(medicineList);
         medicineListView.setMedicineList(medicineList);
+
+    }
+
+
+    @Override
+    public void setListMedicineSharedPreference(List<Medicine> medicineList) {
+        List<Medicine> medList = medicineList;
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.MedicineListPref), Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(medList);
+        prefsEditor.putString(context.getString(R.string.MedicineListObj), json);
+        prefsEditor.commit();
     }
 }
