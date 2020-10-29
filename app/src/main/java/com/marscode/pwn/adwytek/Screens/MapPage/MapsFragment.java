@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -17,29 +16,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.collect.Maps;
-import com.marscode.pwn.adwytek.Data.ApiUtils;
-import com.marscode.pwn.adwytek.Model.Geometry;
-import com.marscode.pwn.adwytek.Model.PlacesNearByResponse;
+import com.marscode.pwn.adwytek.Model.Pharmacy;
 import com.marscode.pwn.adwytek.R;
-import com.marscode.pwn.adwytek.Screens.FragmentBuilder;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class MapsFragment extends Fragment implements MapPageInterface.MapPageView{
+public class MapsFragment extends Fragment implements MapPageInterface.MapPageView {
 
     //initialize variables
     SupportMapFragment supportMapFragment;
@@ -58,7 +50,7 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
         //Assign variable
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        mMapPagePresentation = new MapPagePresenter(new MapPageInteractor(),this);
+        mMapPagePresentation = new MapPagePresenter(new MapPageInteractor(), this);
 
         getCurrentLocation();
         return view;
@@ -128,12 +120,13 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
     }
 
     public void getNearByLocation(String type) {
-//        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-//                "?location=" + currentLat + "," + currentLong +
-//                "&radius=5000" +
-//                "&type=" + type +
-//                "&sensor=true" +
-//                "&key=AIzaSyDjBqWqYDF9BTX_gSpKIO4CydZwnp6hX-g";
+        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+                "?location=" + currentLat + "," + currentLong +
+                "&radius=5000" +
+                "&type=" + type +
+                "&sensor=true" +
+                "&key=AIzaSyDjBqWqYDF9BTX_gSpKIO4CydZwnp6hX-g";
+        Log.i("yarab", url);
         String location = currentLat + "," + currentLong;
         String radius = "5000";
         String sensor = "true";
@@ -143,9 +136,9 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
 
 
     @Override
-    public void showNearByLocOnMap(List<Geometry> geometryList) {
-         for(int i =0 ;i<geometryList.size();i++){
-             addMarker(geometryList.get(i).getLocation().getLat(),geometryList.get(i).getLocation().getLng(),"Name"+i);
-         }
+    public void showNearByLocOnMap(List<Pharmacy> pharmacyList) {
+        for (int i = 0; i < pharmacyList.size(); i++) {
+            addMarker(pharmacyList.get(i).getGeometry().getLocation().getLat(), pharmacyList.get(i).getGeometry().getLocation().getLng(), pharmacyList.get(i).getName());
+        }
     }
 }

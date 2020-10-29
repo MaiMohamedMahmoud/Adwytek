@@ -3,8 +3,7 @@ package com.marscode.pwn.adwytek.Screens.MapPage;
 import android.util.Log;
 
 import com.marscode.pwn.adwytek.Data.ApiUtils;
-import com.marscode.pwn.adwytek.Model.Geometry;
-import com.marscode.pwn.adwytek.Model.Location;
+import com.marscode.pwn.adwytek.Model.Pharmacy;
 import com.marscode.pwn.adwytek.Model.PlacesNearByResponse;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class MapPageInteractor implements MapPageInterface.MapPageInteractor {
     }
 
     @Override
-    public void setPharmacies(List<Geometry> geometries) {
+    public void setPharmacies(List<Pharmacy> pharmacies) {
 
     }
 }

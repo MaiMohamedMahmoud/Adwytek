@@ -1,6 +1,5 @@
 package com.marscode.pwn.adwytek.Model;
 
-
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +11,7 @@ public class Photo {
     private Integer height;
     @SerializedName("html_attributions")
     @Expose
-    private List<Object> htmlAttributions = null;
+    private List<String> htmlAttributions = null;
     @SerializedName("photo_reference")
     @Expose
     private String photoReference;
@@ -28,11 +27,11 @@ public class Photo {
         this.height = height;
     }
 
-    public List<Object> getHtmlAttributions() {
+    public List<String> getHtmlAttributions() {
         return htmlAttributions;
     }
 
-    public void setHtmlAttributions(List<Object> htmlAttributions) {
+    public void setHtmlAttributions(List<String> htmlAttributions) {
         this.htmlAttributions = htmlAttributions;
     }
 
