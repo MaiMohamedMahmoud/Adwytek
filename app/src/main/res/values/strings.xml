@@ -56,6 +56,7 @@
     <string name="ListFragment">Medicine List</string>
     <string name="AddMedicine">Add medicine</string>
     <string name="Map">Map Fragment</string>
+    <string name="errorNearBy">Faild to return Nearst Location</string>
 
 
 </resources>

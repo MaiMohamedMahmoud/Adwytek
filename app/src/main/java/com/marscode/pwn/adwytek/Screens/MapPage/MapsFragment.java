@@ -50,7 +50,7 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
         //Assign variable
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        mMapPagePresentation = new MapPagePresenter(new MapPageInteractor(), this);
+        mMapPagePresentation = new MapPagePresenter(new MapPageInteractor(), this, getContext());
 
         getCurrentLocation();
         return view;
@@ -112,6 +112,13 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
         }
     }
 
+    /**
+     *
+     * @param Lat
+     * @param Lng
+     * @param Title
+     * addMarker used the lat and lng and title to draw the marker in that specific location on map
+     */
     public void addMarker(double Lat, Double Lng, String Title) {
         marker = new LatLng(Lat, Lng);
         map.addMarker(new MarkerOptions().position(marker).title(Title));
@@ -119,16 +126,16 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
 
     }
 
+    /**
+     *
+     * @param type
+     * this function get the type which could be anything Ex:Hospital/restaurant in this case pharmacy
+     *
+     */
+
     public void getNearByLocation(String type) {
-        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-                "?location=" + currentLat + "," + currentLong +
-                "&radius=5000" +
-                "&type=" + type +
-                "&sensor=true" +
-                "&key=AIzaSyDjBqWqYDF9BTX_gSpKIO4CydZwnp6hX-g";
-        Log.i("yarab", url);
         String location = currentLat + "," + currentLong;
-        String radius = "5000";
+        String radius = "1000";
         String sensor = "true";
         String key = getString(R.string.maps_api_key);
         mMapPagePresentation.fetchPharmacies(location, radius, type, sensor, key);
@@ -138,6 +145,7 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
     @Override
     public void showNearByLocOnMap(List<Pharmacy> pharmacyList) {
         for (int i = 0; i < pharmacyList.size(); i++) {
+            //for each pharamacy call add marker func
             addMarker(pharmacyList.get(i).getGeometry().getLocation().getLat(), pharmacyList.get(i).getGeometry().getLocation().getLng(), pharmacyList.get(i).getName());
         }
     }
