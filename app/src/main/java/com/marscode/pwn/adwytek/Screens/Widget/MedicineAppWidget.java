@@ -23,7 +23,7 @@ public class MedicineAppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Initialize the list view
-        Intent intent = new Intent(context, MedicineWidgetServie.class);
+        Intent intent = new Intent(context, MedicineWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
         // Bind the remote adapter
@@ -42,6 +42,14 @@ public class MedicineAppWidget extends AppWidgetProvider {
 
         }
     }
+
+    /**
+     *
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetIds
+     * this is responsible for updating our widget
+     */
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

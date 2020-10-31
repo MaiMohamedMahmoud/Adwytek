@@ -7,14 +7,15 @@
         android:id="@+id/appwidget_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_large"
         android:background="@color/colorPrimary"
         android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:padding="@dimen/margin_large"
         android:text="@string/app_name"
         android:textColor="#ffffff"
         android:textSize="@dimen/text_extra_large"
-        android:textStyle="bold|italic"
-        android:gravity="center"/>
+        android:textStyle="bold|italic" />
+
 
     <ListView
         android:id="@+id/appwidget_recipes_list"

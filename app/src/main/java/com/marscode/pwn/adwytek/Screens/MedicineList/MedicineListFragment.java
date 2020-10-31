@@ -17,6 +17,7 @@ import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.NewMedicine.NewMedicineActivity;
 import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
+import com.marscode.pwn.adwytek.Screens.Widget.MedicineWidgetService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -87,11 +88,15 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
 
     @Override
     public void setMedicineList(List<Medicine> medicineList) {
-        Log.i("yarab inside fragment",medicineList.size()+"");
+        Log.i("yarab inside fragment", medicineList.size() + "");
         MedicineListAdapter medicinelistAdapter = new MedicineListAdapter(medicineList);
         recyclerMedicine.setAdapter(medicinelistAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerMedicine.setLayoutManager(linearLayoutManager);
+
+        medicineListPresenter.setListMedicineSharedPreference(medicineList);
+        MedicineWidgetService.updateWidget(getActivity().getApplicationContext());
+
         //medicineListPresenter.setAlarm(getContext(), medicineList);
 
     }

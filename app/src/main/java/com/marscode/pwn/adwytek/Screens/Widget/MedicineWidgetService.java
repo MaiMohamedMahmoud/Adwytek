@@ -15,7 +15,7 @@ import com.marscode.pwn.adwytek.R;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class MedicineWidgetServie extends RemoteViewsService {
+public class MedicineWidgetService extends RemoteViewsService {
 
 
     public static List<Medicine> getSharedPrefRecipes(Context context) {
@@ -30,7 +30,7 @@ public class MedicineWidgetServie extends RemoteViewsService {
         return recipeObj;
     }
 
-    public static void updateWidget(Context context, int id) {
+    public static void updateWidget(Context context) {
 
 //        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.recipeItemPref), Context.MODE_PRIVATE);
 //        SharedPreferences.Editor prefsEditor = sharedPref.edit();

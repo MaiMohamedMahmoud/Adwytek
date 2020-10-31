@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
 import com.marscode.pwn.adwytek.R;
+import com.marscode.pwn.adwytek.Screens.Widget.MedicineWidgetService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,7 +86,7 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
             medicineList.add(medicineObj);
 
         }
-        setListMedicineSharedPreference(medicineList);
+
         medicineListView.setMedicineList(medicineList);
 
     }
