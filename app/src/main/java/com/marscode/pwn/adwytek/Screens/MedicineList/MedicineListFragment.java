@@ -95,8 +95,6 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
         recyclerMedicine.setLayoutManager(linearLayoutManager);
 
         medicineListPresenter.setListMedicineSharedPreference(medicineList);
-        MedicineWidgetService.updateWidget(getActivity().getApplicationContext());
-
         //medicineListPresenter.setAlarm(getContext(), medicineList);
 
     }

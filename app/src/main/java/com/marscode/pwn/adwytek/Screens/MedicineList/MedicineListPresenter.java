@@ -84,9 +84,8 @@ class MedicineListPresenter implements MedicineListInterface.MedicineListPresent
         for (DataSnapshot med : dataSnapshot.getChildren()) {
             Medicine medicineObj = med.getValue(Medicine.class);
             medicineList.add(medicineObj);
-
         }
-
+        MedicineWidgetService.updateWidget(context.getApplicationContext());
         medicineListView.setMedicineList(medicineList);
 
     }

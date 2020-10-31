@@ -131,7 +131,6 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         getCurrentDate();
         start_btn.setText(sdf.format(currentDate.getTime()));
         end_btn.setText(sdf.format(currentDate.getTime()));
-        startDate = endDate = currentDate.getTime();
         start_btn.setOnClickListener(this);
         end_btn.setOnClickListener(this);
         btn_mon.setOnClickListener(this);
@@ -179,12 +178,17 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     }
 
     public Calendar getCurrentDate() {
+        //we need to define end of day to return that the end date if it will be at the same day it will be at the end hour and end min and sec of that day
+        Calendar endOfDay = Calendar.getInstance();
         final Calendar cal = Calendar.getInstance();
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
         cal.set(mYear, mMonth, mDay);
+        endOfDay.set(mYear, mMonth, mDay, 23, 59, 59);
         currentDate = cal;
+        startDate = currentDate.getTime();
+        endDate = endOfDay.getTime();
         return cal;
     }
 
@@ -202,9 +206,9 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         final Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                        if(buttonView == end_btn){
-                            calendar.set(year, monthOfYear, dayOfMonth,23,59,59);
-                        }else{
+                        if (buttonView == end_btn) {
+                            calendar.set(year, monthOfYear, dayOfMonth, 23, 59, 59);
+                        } else {
                             calendar.set(year, monthOfYear, dayOfMonth);
                         }
 
@@ -267,8 +271,8 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         Intent intent = new Intent(getContext(), AlarmBroadcastReceiver.class);
         intent.putExtra("startDate", startDate.getTime());
         intent.putExtra("endDate", endDate.getTime());
-        intent.putExtra("dayList",(ArrayList<String>) daysList );
-        intent.putExtra("alarmID",AlarmId);
+        intent.putExtra("dayList", (ArrayList<String>) daysList);
+        intent.putExtra("alarmID", AlarmId);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(getContext(), AlarmId, intent, 0);
         if (daysList.size() > 1) {
             //if there is more than one day then the alarm need to be repeated.
@@ -301,6 +305,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
             }
         }
         if (endDate.before(startDate)) {
+            Log.i("yarab","resetting the value of End Date ");
             endDate = startDate;
         }
         for (int i = 0; i < doseTimeList.size(); i++) {
@@ -332,13 +337,13 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         switch (view.getId()) {
             case R.id.btn_start_date:
                 // Get Current Date
-                getCurrentDate();
+                //getCurrentDate();
                 //Launch Date Picker Dialog
                 showDatePickerDialog(start_btn);
                 break;
             case R.id.btn_end_date:
                 // Get Current Date
-                getCurrentDate();
+                //getCurrentDate();
                 //Launch Date Picker Dialog
                 showDatePickerDialog(end_btn);
                 break;
