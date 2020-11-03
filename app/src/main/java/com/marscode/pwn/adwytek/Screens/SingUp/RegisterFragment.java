@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +40,8 @@ import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +66,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     private DatabaseReference mDatabase;
     List<String> phoneList;
     List<String> caregiverList;
+    private AwesomeValidation mAwesomeValidation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +86,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            Log.i("yarab ",currentUser.getUid());
+            Log.i("yarab ", currentUser.getUid());
             startMedicineListActivity();
         }
     }
@@ -111,6 +116,7 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         editTxtAge = view.findViewById(R.id.edit_txt_Age);
         phoneList = new ArrayList<>();
         caregiverList = new ArrayList<>();
+        mAwesomeValidation = new AwesomeValidation(BASIC);
 
         AddPhone(view);
         AddCareGiverPhone(view);
@@ -136,9 +142,11 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editTxtCareGiverPhone.clearFocus();
-                editTxtPatientPhone.clearFocus();
-                registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), caregiverList, phoneList);
+                if (validateUser()) {
+                    editTxtCareGiverPhone.clearFocus();
+                    editTxtPatientPhone.clearFocus();
+                    registerPresenter.createNewUser(editTxtEmail.getText().toString(), editTxtPassword.getText().toString(), editTxtName.getText().toString(), editTxtAge.getText().toString(), caregiverList, phoneList);
+                }
             }
         });
         return view;
@@ -238,21 +246,31 @@ public class RegisterFragment extends Fragment implements RegisterInterface.Regi
     }
 
     @Override
-    public void validateUser() {
+    public boolean validateUser() {
 
         //editTxtName.getText().toString(), editTxtPassword.getText().toString(),editTxtAge.getText().toString(),editTxtCareGiverPhone.getText().toString(),editTxtPatientPhone.getText().toString()
 
         // Validations for input email and password
-        if (TextUtils.isEmpty(editTxtEmail.getText().toString())) {
-            editTxtEmail.setError("Please enter email!!");
-            editTxtEmail.setFocusable(true);
-            return;
-        }
-        if (TextUtils.isEmpty(editTxtPassword.getText().toString())) {
-            editTxtPassword.setError("Please enter password!!");
-            editTxtPassword.setFocusable(true);
-            return;
-        }
+//        if (TextUtils.isEmpty(editTxtEmail.getText().toString())) {
+//            editTxtEmail.setError("Please enter email!!");
+//            editTxtEmail.setFocusable(true);
+//            return;
+//        }
+//        if (TextUtils.isEmpty(editTxtPassword.getText().toString())) {
+//            editTxtPassword.setError("Please enter password!!");
+//            editTxtPassword.setFocusable(true);
+//            return;
+//        }
+
+        mAwesomeValidation.addValidation(getActivity(), R.id.name_text_input_layout, "[a-zA-Z\\s]+", R.string.err_name);
+        mAwesomeValidation.addValidation(getActivity(), R.id.age_text_input_layout, "[1-9][0-9]", R.string.err_Age);
+        mAwesomeValidation.addValidation(getActivity(), R.id.email_text_input_layout, Patterns.EMAIL_ADDRESS, R.string.err_email);
+        // to validate password
+        String regexPassword = "(?=.*[a-zA-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
+        mAwesomeValidation.addValidation(getActivity(), R.id.password_text_input_layout, regexPassword, R.string.err_password);
+        mAwesomeValidation.addValidation(getActivity(), R.id.phone_text_input_layout, Patterns.PHONE, R.string.err_password);
+
+        return mAwesomeValidation.validate();
     }
 
     @Override

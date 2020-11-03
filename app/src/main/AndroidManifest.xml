@@ -24,7 +24,7 @@
             android:name=".Screens.PatientCareGiver.PatientCareGiverActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Screens.SplashScreens.SplashScreens"
+            android:name=".Screens.IntroPage.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

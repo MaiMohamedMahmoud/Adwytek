@@ -20,7 +20,7 @@ interface LoginInterface {
     }
 
     interface LoginView {
-        void validateUser();
+        boolean validateUser();
 
         void startMedicineListActivity();
 

@@ -38,7 +38,7 @@ interface RegisterInterface {
     interface RegisterView {
         void startLoggedInActivity();
 
-        void validateUser();
+        boolean validateUser();
 
         void startMedicineListActivity();
 

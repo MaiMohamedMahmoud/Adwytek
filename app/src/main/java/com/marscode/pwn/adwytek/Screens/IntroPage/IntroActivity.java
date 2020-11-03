@@ -1,11 +1,10 @@
-package com.marscode.pwn.adwytek.Screens.SplashScreens;
+package com.marscode.pwn.adwytek.Screens.IntroPage;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -15,22 +14,45 @@ import com.github.paolorotolo.appintro.model.SliderPage;
 import com.github.paolorotolo.appintro.model.SliderPagerBuilder;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.PatientCareGiver.PatientCareGiverActivity;
-import com.marscode.pwn.adwytek.Screens.SignIn.LoginActivity;
 import com.marscode.pwn.adwytek.Screens.SingUp.RegisterActivity;
 
-public class SplashScreens extends AppIntro {
+public class IntroActivity extends AppIntro {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showIntroSlides();
+        if (restorePreference()) {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
+        } else {
+            savePreference();
+        }
     }
+
+    public boolean restorePreference() {
+        //retrieve data from the sharedPref to know if the user already see the IntroPage before or not
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.save_ref_is_introPage), MODE_PRIVATE);
+        return sharedPreferences.getBoolean(getString(R.string.IsIntroOpen), false);
+
+    }
+
+    public void savePreference() {
+        // Storing data into SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.save_ref_is_introPage), MODE_PRIVATE);
+        // Creating an Editor object
+        // to edit(write to the file)
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putBoolean(getString(R.string.IsIntroOpen), true);
+        myEdit.commit();
+    }
+
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        Intent intent = new Intent(currentFragment.getContext(), PatientCareGiverActivity.class);
+        Intent intent = new Intent(currentFragment.getContext(), RegisterActivity.class);
         currentFragment.getActivity().startActivity(intent);
 
     }
@@ -38,7 +60,7 @@ public class SplashScreens extends AppIntro {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        Intent intent = new Intent(currentFragment.getContext(), PatientCareGiverActivity.class);
+        Intent intent = new Intent(currentFragment.getContext(), RegisterActivity.class);
         currentFragment.getActivity().startActivity(intent);
     }
 

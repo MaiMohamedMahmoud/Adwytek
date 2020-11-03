@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.MedicineList.MedicineListActivity;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,7 @@ public class LoginFragment extends Fragment implements LoginInterface.LoginView 
     EditText editTxtPassword;
     Button signIn;
     LoginInteractor loginInteractor;
+    private AwesomeValidation mAwesomeValidation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +55,15 @@ public class LoginFragment extends Fragment implements LoginInterface.LoginView 
         final LoginPresenter loginPresenter = new LoginPresenter(new LoginInteractor(mAuth), this, getActivity().getApplicationContext());
         editTxtEmail = view.findViewById(R.id.edit_txt_email);
         editTxtPassword = view.findViewById(R.id.edit_txt_password);
+        mAwesomeValidation = new AwesomeValidation(BASIC);
+
         signIn = view.findViewById(R.id.btn_login);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginPresenter.signIn(editTxtEmail.getText().toString(), editTxtPassword.getText().toString());
+                if (validateUser()) {
+                    loginPresenter.signIn(editTxtEmail.getText().toString(), editTxtPassword.getText().toString());
+                }
             }
         });
         return view;
@@ -68,8 +77,13 @@ public class LoginFragment extends Fragment implements LoginInterface.LoginView 
     }
 
     @Override
-    public void validateUser() {
-
+    public boolean validateUser() {
+        // to validate email
+        mAwesomeValidation.addValidation(getActivity(), R.id.login_email_text_input_layout, Patterns.EMAIL_ADDRESS, R.string.err_email);
+        // to validate password
+        String regexPassword = "(?=.*[a-zA-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
+        mAwesomeValidation.addValidation(getActivity(), R.id.login_password_text_input_layout, regexPassword, R.string.err_password);
+        return mAwesomeValidation.validate();
     }
 
     @Override
