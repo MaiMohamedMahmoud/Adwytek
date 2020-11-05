@@ -32,7 +32,7 @@ public class NewMedicineInteractor implements NewMedicineInterface.NewMedicineIn
     }
 
     @Override
-    public void addNewMedicine(Medicine medicine, List<Dose> doseList) {
+    public void addNewMedicine(Medicine medicine, List<Dose> doseList, OnFinishedListener onFinishedListener) {
         String key = databaseReference.child("medicine").push().getKey();
 
         Map<String, Object> medicineValues = medicine.toMap(databaseReference, key);
@@ -57,6 +57,6 @@ public class NewMedicineInteractor implements NewMedicineInterface.NewMedicineIn
         }
         databaseReference.child("user-medicine").child(auth.getUid()).child(key).updateChildren(medicine_childUpdates);
         databaseReference.child("medicine").child(key).updateChildren(medicine_childUpdates);
-
+        onFinishedListener.onFinish();
     }
 }

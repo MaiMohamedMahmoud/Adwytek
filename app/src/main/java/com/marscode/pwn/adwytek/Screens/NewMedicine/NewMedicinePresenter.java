@@ -11,12 +11,14 @@ import com.marscode.pwn.adwytek.R;
 
 import java.util.List;
 
-public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePresenter {
+public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePresenter, NewMedicineInteractor.OnFinishedListener {
 
     NewMedicineInteractor newMedicineInteractor;
+    NewMedicineInterface.NewMedicineView newMedicineView;
 
-    NewMedicinePresenter(NewMedicineInteractor newMedicineInteractor) {
+    NewMedicinePresenter(NewMedicineInteractor newMedicineInteractor, NewMedicineInterface.NewMedicineView newMedicineView) {
         this.newMedicineInteractor = newMedicineInteractor;
+        this.newMedicineView = newMedicineView;
     }
 
     @Override
@@ -29,6 +31,11 @@ public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePre
 
     @Override
     public void addNewMedicine(Medicine medicine, List<Dose> doseList) {
-        this.newMedicineInteractor.addNewMedicine(medicine,doseList);
+        this.newMedicineInteractor.addNewMedicine(medicine, doseList,this);
+    }
+
+    @Override
+    public void onFinish() {
+        newMedicineView.closeActivity();
     }
 }

@@ -10,20 +10,20 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="member">Already a member?</string>
     <string name="signup">SignUp</string>
     <string name="titleLogin">Sign In</string>
     <string name="slide_one_down_text">We care More .. So you can be carefree </string>
     <string name="JoinNow">JOIN NOW AS:</string>
-    <string name="patient">PATIENT</string>
-    <string name="caregiver">CARE GIVER</string>
-    <string name="medicineIcon">MedicineIcon</string>
+    <string name="patient" translatable="false">PATIENT</string>
+    <string name="caregiver" translatable="false">CARE GIVER</string>
+    <string name="medicineIcon" translatable="false">MedicineIcon</string>
     <string name="medicineName">Medication Name</string>
-    <string name="medicineStartDate">6 Sep - 23 Sep</string>
-    <string name="medicineTimes"> 3x per day | Tu , Fr , Sa</string>
-    <string name="editIcon">Edit Icon</string>
-    <string name="successLogin">Successfully Logged In</string>
+    <string name="medicineStartDate" translatable="false">6 Sep - 23 Sep</string>
+    <string name="medicineTimes" translatable="false"> 3x per day | Tu , Fr , Sa</string>
+    <string name="editIcon" translatable="false">Edit Icon</string>
+    <string name="successLogin">Successfully Logged In!</string>
     <string name="success_register">Registration successful!</string>
     <string name="register_fail">Registration failed!! Please try again later"</string>
     <string name="time">Time</string>
@@ -34,36 +34,36 @@
     <string name="selected_days">Selected Days</string>
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
-    <string name="mon">Mo</string>
-    <string name="tue">Tu</string>
-    <string name="Wen">We</string>
-    <string name="Thu">Th</string>
-    <string name="Fri">Fr</string>
-    <string name="Sat">Sa</string>
-    <string name="Sun">Su</string>
+    <string name="mon" translatable="false">Mo</string>
+    <string name="tue" translatable="false">Tu</string>
+    <string name="Wen" translatable="false">We</string>
+    <string name="Thu" translatable="false">Th</string>
+    <string name="Fri" translatable="false">Fr</string>
+    <string name="Sat" translatable="false">Sa</string>
+    <string name="Sun" translatable="false">Su</string>
 
 
     <!-- Here is the Strings for validations-->
-    <string name="error_date">Please, Select a date a valid date</string>
+    <string name="error_date">Please, Select a valid date</string>
     <string name="medicine_required">You must enter medicine name</string>
     <string name="quanity_required">You must enter Quantity dose</string>
     <string name="selectedDays">You must select at least one day</string>
     <string name="dose_time_error">You have to select the dose time</string>
     <string name="alarmString">Take Your Medicine</string>
     <string name="Add">Add</string>
-    <string name="profile">Profile</string>
+    <string name="profile" translatable="false">Profile</string>
     <string name="nearby">Nearby</string>
     <string name="ListFragment">Medicine List</string>
     <string name="AddMedicine">Add medicine</string>
     <string name="Map">Map Fragment</string>
     <string name="errorNearBy">Faild to return Nearst Location</string>
-    <string name="MedicineListPref">MedicineListPrefrence</string>
-    <string name="MedicineListObj">MedicineListObject</string>
-    <string name="medicine_name_widget">Medicine Name</string>
-    <string name="image_widget">Medicine Icon</string>
-    <string name="frequency_time_txt_widget">3</string>
-    <string name="save_ref_is_introPage">IntroPage</string>
-    <string name="IsIntroOpen">isIntroOpend</string>
+    <string name="MedicineListPref" translatable="false">MedicineListPrefrence</string>
+    <string name="MedicineListObj" translatable="false">MedicineListObject</string>
+    <string name="medicine_name_widget" translatable="false">Medicine Name</string>
+    <string name="image_widget" translatable="false">Medicine Icon</string>
+    <string name="frequency_time_txt_widget" translatable="false">3</string>
+    <string name="save_ref_is_introPage" translatable="false">IntroPage</string>
+    <string name="IsIntroOpen" translatable="false">isIntroOpend</string>
     <string name="login">Login</string>
     <string name="name">Name</string>
     <string name="age">Age</string>

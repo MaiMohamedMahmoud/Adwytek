@@ -55,7 +55,7 @@ import androidx.fragment.app.Fragment;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
-public class NewMedicineFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, TextWatcher {
+public class NewMedicineFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, TextWatcher, NewMedicineInterface.NewMedicineView {
     LinearLayout medication_dose_data;
     View doseView;
     NewMedicinePresenter newMedicinePresenter;
@@ -78,7 +78,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     List<String> doseQuantityList;
     List<Calendar> calendarList;
     long frequency_of_intake;
-    Button addMedicineBtn;
+    Button addMedicineBtn, cancelBtn;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     AwesomeValidation mAwesomeValidation;
@@ -101,6 +101,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         start_btn = view.findViewById(R.id.btn_start_date);
         end_btn = view.findViewById(R.id.btn_end_date);
         addMedicineBtn = view.findViewById(R.id.save);
+        cancelBtn = view.findViewById(R.id.cancel);
         edit_txt_medicine_name = view.findViewById(R.id.edit_txt_medicine_name);
         medicine_name_txt_input_layout = view.findViewById(R.id.medicine_name_text_input_layout);
         daysList = new ArrayList<>();
@@ -114,7 +115,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         btn_sat = view.findViewById(R.id.btn_sat);
         btn_sun = view.findViewById(R.id.btn_sun);
         newMedicineInteractor = new NewMedicineInteractor(mAuth, mDatabase);
-        newMedicinePresenter = new NewMedicinePresenter(newMedicineInteractor);
+        newMedicinePresenter = new NewMedicinePresenter(newMedicineInteractor, this);
         timeList = new ArrayList<>();
         doseTimeList = new ArrayList<>();
         doseQuantityList = new ArrayList<>();
@@ -141,6 +142,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         btn_sat.setOnClickListener(this);
         btn_sun.setOnClickListener(this);
         addMedicineBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
 
         return view;
     }
@@ -305,7 +307,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
             }
         }
         if (endDate.before(startDate)) {
-            Log.i("yarab","resetting the value of End Date ");
+            Log.i("yarab", "resetting the value of End Date ");
             endDate = startDate;
         }
         for (int i = 0; i < doseTimeList.size(); i++) {
@@ -399,6 +401,9 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
                     addNewMedicine();
                 }
                 break;
+            case R.id.cancel:
+                closeActivity();
+                break;
             default:
                 // Get Current Time
                 getCurrentTime();
@@ -445,5 +450,10 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public void afterTextChanged(Editable editable) {
         doseQuantityList.add(editable.toString());
+    }
+
+    @Override
+    public void closeActivity() {
+        getActivity().finish();
     }
 }

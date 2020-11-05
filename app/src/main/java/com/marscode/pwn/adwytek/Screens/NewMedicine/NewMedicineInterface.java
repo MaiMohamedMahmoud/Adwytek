@@ -12,7 +12,10 @@ interface NewMedicineInterface {
 
 
     interface NewMedicineInteractor {
-        void addNewMedicine(Medicine medicine, List<Dose> doseList);
+        interface  OnFinishedListener {
+            void onFinish();
+        }
+        void addNewMedicine(Medicine medicine, List<Dose> doseList,OnFinishedListener listener);
     }
 
     interface NewMedicinePresenter {
@@ -22,6 +25,6 @@ interface NewMedicineInterface {
     }
 
     interface NewMedicineView {
-
+        void closeActivity();
     }
 }
