@@ -275,6 +275,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         intent.putExtra("endDate", endDate.getTime());
         intent.putExtra("dayList", (ArrayList<String>) daysList);
         intent.putExtra("alarmID", AlarmId);
+        Log.i("yarab", " before setting Alarm: "+ calendar.getTime().toString());
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(getContext(), AlarmId, intent, 0);
         if (daysList.size() > 1) {
             //if there is more than one day then the alarm need to be repeated.
@@ -311,6 +312,8 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
             endDate = startDate;
         }
         for (int i = 0; i < doseTimeList.size(); i++) {
+            Log.i("yarab", "addNewMedicine: before set Alarm "+ doseTimeList.get(i));
+
             setAlarm(getCalendar(doseTimeList.get(i)));
             //alarmIsToday(startDate, endDate, daysList);
         }

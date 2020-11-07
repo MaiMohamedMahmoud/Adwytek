@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marscode.pwn.adwytek.Model.Dose;
 import com.marscode.pwn.adwytek.Model.Medicine;
@@ -79,14 +80,25 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 });
             }
 
+
             for (int i = 0; i < listing.size(); i++) {
+
                 if (i == listing.size() - 1) {
-                    list_of_days = list_of_days + listing.get(i).day;
+                    if (!list_of_days.contains(listing.get(i).day)) {
+                        list_of_days = list_of_days + listing.get(i).day;
+                    }
+
                 } else {
-                    list_of_days = list_of_days + listing.get(i).day + " ,";
+                    if (!list_of_days.contains(listing.get(i).day)) {
+                        list_of_days = list_of_days + listing.get(i).day + " ,";
+                    }
                 }
             }
+            //this to delete the , in the end of the string contating days in order to show them.
+            if (list_of_days.endsWith(",")) {
 
+                list_of_days = list_of_days.substring(0, list_of_days.length() - 1);
+            }
             txt_medicine_times.setText(medicineList.get(position).getFrequency_of_intake() + "x per day | " + list_of_days);
 
             txt_medicine_Date.setText(dateStartedFormatted + " - " + dateEndFormatted);

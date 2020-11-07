@@ -31,6 +31,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Date startDate = new Date(startDateLong);
         Date endDate = new Date(endDateLong);
         List<String> dayList = (ArrayList<String>) intent.getSerializableExtra("dayList");
+        Log.i("yarab  ", "inside broadcast recicend");
 
         if (alarmIsValid(startDate, endDate)) {
             if (alarmIsToday(dayList)) {
@@ -46,14 +47,15 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
     private boolean alarmIsValid(Date startDate, Date endDate) {
+        Log.i("yarab", "alam valid");
         listDays = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         today = calendar.get(Calendar.DAY_OF_WEEK);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        Log.i("yarab Date alarm valid ", calendar.getTime().toString() + " is after startDate" + calendar.getTime().after(startDate) + " is equal startDate" + calendar.getTime().equals(startDate) + " is equal endDate " + calendar.getTime().equals(endDate) + " is before endDate" + calendar.getTime().before(endDate));
+        //Log.i("yarab Date alarm valid ", calendar.getTime().toString() + " is after startDate" + calendar.getTime().after(startDate) + " is equal startDate" + calendar.getTime().equals(startDate) + " is equal endDate " + calendar.getTime().equals(endDate) + " is before endDate" + calendar.getTime().before(endDate));
         if ((calendar.getTime().after(startDate) || calendar.getTime().equals(startDate)) && (calendar.getTime().equals(endDate) || calendar.getTime().before(endDate))) {
-            Log.i("yarab Date", calendar.getTime().toString() + " List of days " + listDays.size());
+            //Log.i("yarab Date", calendar.getTime().toString() + " List of days " + listDays.size());
             return true;
         } else {
             return false;

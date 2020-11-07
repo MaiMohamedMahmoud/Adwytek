@@ -48,4 +48,8 @@
     <string name="err_name">يجب ادخال الاسم</string>
     <string name="err_Age">يجب ادخال العمر</string>
     <string name="login">"تسجيل الدخول "</string>
+    <string name="home" >الصفحه الرئيسيه</string>
+    <string name="loading_message">يتم تحميل ادويتك!</string>
+    <string name="back_click">الرجاء النقر مرة أخرى للخروج</string>
+
 </resources>

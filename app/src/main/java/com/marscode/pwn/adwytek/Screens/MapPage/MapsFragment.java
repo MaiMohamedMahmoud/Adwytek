@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +29,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+
+import static android.content.ContentValues.TAG;
 
 public class MapsFragment extends Fragment implements MapPageInterface.MapPageView {
 
@@ -96,12 +97,15 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
             //permission Denied
             //request permission
             Log.i("yarab", "permission denied");
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.i("yarab", "permission result" + +requestCode + permissions.length + grantResults[0]);
         if (requestCode == 44) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // if the grantResult is permisson granted
@@ -113,11 +117,9 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
     }
 
     /**
-     *
      * @param Lat
      * @param Lng
-     * @param Title
-     * addMarker used the lat and lng and title to draw the marker in that specific location on map
+     * @param Title addMarker used the lat and lng and title to draw the marker in that specific location on map
      */
     public void addMarker(double Lat, Double Lng, String Title) {
         marker = new LatLng(Lat, Lng);
@@ -127,10 +129,7 @@ public class MapsFragment extends Fragment implements MapPageInterface.MapPageVi
     }
 
     /**
-     *
-     * @param type
-     * this function get the type which could be anything Ex:Hospital/restaurant in this case pharmacy
-     *
+     * @param type this function get the type which could be anything Ex:Hospital/restaurant in this case pharmacy
      */
 
     public void getNearByLocation(String type) {

@@ -51,7 +51,7 @@
     <string name="dose_time_error">You have to select the dose time</string>
     <string name="alarmString">Take Your Medicine</string>
     <string name="Add">Add</string>
-    <string name="profile" translatable="false">Profile</string>
+    <string name="home" >Home</string>
     <string name="nearby">Nearby</string>
     <string name="ListFragment">Medicine List</string>
     <string name="AddMedicine">Add medicine</string>
@@ -74,5 +74,9 @@
     <string name="err_password">Password Required</string>
     <string name="err_name">Name Required</string>
     <string name="err_Age">Age Required</string>
+    <string name="loading_message">Loading medicine, please wait.</string>
+
+    <string name="description_img_no_medicine" translatable="false">No medicine yet</string>
+    <string name="back_click">Please click back again to exit</string>
 
 </resources>
