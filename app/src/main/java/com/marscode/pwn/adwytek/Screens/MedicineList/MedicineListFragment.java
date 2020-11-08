@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -51,9 +54,26 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     @Override
     public void onStop() {
         super.onStop();
+    }
 
-        //sign out on the profile page
-        //mAuth.signOut();
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.setting, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                //sign out on the profile page
+                mAuth.signOut();
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -78,7 +98,7 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
 
                     @Override
                     public void run() {
-                        doubleBackToExitPressedOnce=false;
+                        doubleBackToExitPressedOnce = false;
                     }
                 }, 2000);
             }
@@ -97,6 +117,7 @@ public class MedicineListFragment extends Fragment implements MedicineListInterf
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_medicine_list, container, false);
         showDialog();
+        setHasOptionsMenu(true);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerMedicine = view.findViewById(R.id.recycle_medicineList);
         fab_new_medicine = view.findViewById(R.id.fab_new_medicine);

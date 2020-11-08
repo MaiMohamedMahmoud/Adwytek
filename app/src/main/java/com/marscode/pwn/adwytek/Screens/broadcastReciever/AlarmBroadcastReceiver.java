@@ -9,12 +9,16 @@ import android.text.method.DateTimeKeyListener;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.marscode.pwn.adwytek.R;
 import com.marscode.pwn.adwytek.Screens.RingingAlarm.RingActivity;
+import com.marscode.pwn.adwytek.Screens.service.AlarmService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 
 import static android.content.ContentValues.TAG;
 
@@ -35,9 +39,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         if (alarmIsValid(startDate, endDate)) {
             if (alarmIsToday(dayList)) {
-                Intent newIntent = new Intent(context, RingActivity.class);
-                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                context.startActivity(newIntent);
+                Intent intentService = new Intent(context, AlarmService.class);
+                intentService.putExtra(context.getString(R.string.alarmtitle_Extra_string), context.getString(R.string.alarmtitle_Extra_string));
+                ContextCompat.startForegroundService(context, intentService);
             }
         } else {
             cancelAlarm(alarmId, context);

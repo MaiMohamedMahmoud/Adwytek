@@ -51,5 +51,5 @@
     <string name="home" >الصفحه الرئيسيه</string>
     <string name="loading_message">يتم تحميل ادويتك!</string>
     <string name="back_click">الرجاء النقر مرة أخرى للخروج</string>
-
+    <string name="logout">الخروج</string>
 </resources>

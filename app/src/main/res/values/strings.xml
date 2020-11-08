@@ -79,4 +79,7 @@
     <string name="description_img_no_medicine" translatable="false">No medicine yet</string>
     <string name="back_click">Please click back again to exit</string>
 
+    <string name="logout">Log out</string>
+    <string name="alarmtitle_Extra_string" translatable="false">alarmTitle</string>
+
 </resources>

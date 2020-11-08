@@ -31,6 +31,7 @@ public class NewMedicineInteractor implements NewMedicineInterface.NewMedicineIn
         databaseReference = database;
     }
 
+
     @Override
     public void addNewMedicine(Medicine medicine, List<Dose> doseList, OnFinishedListener onFinishedListener) {
         String key = databaseReference.child("medicine").push().getKey();

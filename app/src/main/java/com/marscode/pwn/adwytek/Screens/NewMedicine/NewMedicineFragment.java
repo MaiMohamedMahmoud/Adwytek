@@ -314,6 +314,7 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         for (int i = 0; i < doseTimeList.size(); i++) {
             Log.i("yarab", "addNewMedicine: before set Alarm "+ doseTimeList.get(i));
 
+            //TODO fix this issue the alarm only contating the time with no info about the days.
             setAlarm(getCalendar(doseTimeList.get(i)));
             //alarmIsToday(startDate, endDate, daysList);
         }
@@ -333,6 +334,11 @@ public class NewMedicineFragment extends Fragment implements AdapterView.OnItemS
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hours));
         calendar.set(Calendar.MINUTE, Integer.parseInt(min));
         calendar.set(Calendar.SECOND, 0);
+        //TODO you have to see this check and uncomment it.... to fix issue in alarm
+        // if alarm time has already passed, increment day by 1
+//        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+//            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+//        }
         return calendar;
     }
 

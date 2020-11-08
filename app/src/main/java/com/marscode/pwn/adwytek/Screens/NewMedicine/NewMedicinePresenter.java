@@ -31,7 +31,7 @@ public class NewMedicinePresenter implements NewMedicineInterface.NewMedicinePre
 
     @Override
     public void addNewMedicine(Medicine medicine, List<Dose> doseList) {
-        this.newMedicineInteractor.addNewMedicine(medicine, doseList,this);
+        newMedicineInteractor.addNewMedicine(medicine, doseList,this);
     }
 
     @Override
