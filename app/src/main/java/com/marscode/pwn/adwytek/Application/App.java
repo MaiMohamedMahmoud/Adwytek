@@ -6,6 +6,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App extends Application {
     public static final String Channel_Id = "serviceChannel";
 
@@ -26,4 +29,7 @@ public class App extends Application {
             manager.createNotificationChannel(serviceChannel);
         }
     }
+
+
+
 }

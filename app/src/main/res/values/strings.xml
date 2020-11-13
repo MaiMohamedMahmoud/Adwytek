@@ -81,5 +81,6 @@
 
     <string name="logout">Log out</string>
     <string name="alarmtitle_Extra_string" translatable="false">alarmTitle</string>
+    <string name="dismiss_me">Dismiss me</string>
 
 </resources>

@@ -44,7 +44,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
     @Override
     public int getItemCount() {
-        return medicineList.size();
+        return medicineList==null?0:medicineList.size();
     }
 
 

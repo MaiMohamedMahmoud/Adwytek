@@ -118,7 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/calendar"
                         android:src="@drawable/ic_baseline_calendar_today_24"></ImageView>
 
                     <Button
